@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Nomo Hsiang的博客，关注前段技术。">
+    <meta name="keyword" content="Nomo,isnomo,NOMO,nomo博客,nomo blog,isnomo blog">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="icon" href="/img/icon.png">
+    <link rel="alternate" type="application/atom+xml" title="Nomo" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        Nomo&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://blog.isnomo.com/tags/Markdown/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('/img/mobile.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "false" data-istags="true
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    Nomo
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="blog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">首页</a>
+                    </li>
+					
+					
+                    
+                        
+							
+								
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">标签</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/archives/">归档</a>
+                        </li>
+							
+						
+                    
+                        
+							
+								
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/works/">作品集</a>
+                        </li>
+							
+						
+                    
+					
+					
+						<li>
+							<a href="/about">关于我</a>
+						</li>
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#blog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+<style>
+    .intro-header .site-heading {
+        margin: 50px;
+    }
+
+    header.intro-header {
+        background-image: url('/img/blog_header.jpg');
+    }
+
+</style>
+
+<!-- Page Header -->
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
+                <div class="site-heading text-center">
+                    <h1>Nomo</h1>
+                    <span class="subheading">一穷二白瞎折腾</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Main Content -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8  col-md-10 col-md-offset-1">
+
+            <!-- 存档列表 -->
+
+            <div class="arc-list">
+                
+                
+
+                    
+                    
+                        
+                        <a class="fa fa-calendar arc-year" >
+                            <b>2017</b>
+                        </a>
+
+                    
+                    <div class="arc-preview">
+    <a href="/2017/05/22/lazyImage原生JS图片懒加载/">
+        <b class="arc-title">
+            lazyImage原生JS图片懒加载
+        </b>
+    </a>
+    <span class="arc-date">
+        2017-05-22
+    </span>
+</div>
+
+
+                
+
+                    
+                    
+                    <div class="arc-preview">
+    <a href="/2017/02/20/原生JS实现图片预览/">
+        <b class="arc-title">
+            原生JS实现图片预览
+        </b>
+    </a>
+    <span class="arc-date">
+        2017-02-20
+    </span>
+</div>
+
+
+                
+
+                    
+                    
+                    <div class="arc-preview">
+    <a href="/2017/02/17/PHP简单的注册与登录验证/">
+        <b class="arc-title">
+            PHP简单的登录验证
+        </b>
+    </a>
+    <span class="arc-date">
+        2017-02-17
+    </span>
+</div>
+
+
+                
+
+                    
+                    
+                        
+                        <a class="fa fa-calendar arc-year" >
+                            <b>2016</b>
+                        </a>
+
+                    
+                    <div class="arc-preview">
+    <a href="/2016/12/06/多说评论区显示UA标示/">
+        <b class="arc-title">
+            多说评论区显示UA与博主标示
+        </b>
+    </a>
+    <span class="arc-date">
+        2016-12-06
+    </span>
+</div>
+
+
+                
+
+                    
+                    
+                    <div class="arc-preview">
+    <a href="/2016/12/06/Hexo博客使用不蒜子统计功能/">
+        <b class="arc-title">
+            Hexo博客使用不蒜子统计功能
+        </b>
+    </a>
+    <span class="arc-date">
+        2016-12-06
+    </span>
+</div>
+
+
+                
+
+                    
+                    
+                    <div class="arc-preview">
+    <a href="/2016/04/07/Less语法学习笔记/">
+        <b class="arc-title">
+            Less语法学习笔记
+        </b>
+    </a>
+    <span class="arc-date">
+        2016-04-07
+    </span>
+</div>
+
+
+                
+
+                    
+                    
+                    <div class="arc-preview">
+    <a href="/2016/04/06/Bootstrap学习笔记02/">
+        <b class="arc-title">
+            Bootstrap学习笔记02
+        </b>
+    </a>
+    <span class="arc-date">
+        2016-04-06
+    </span>
+</div>
+
+
+                
+
+                    
+                    
+                    <div class="arc-preview">
+    <a href="/2016/04/02/Bootstrap学习笔记01/">
+        <b class="arc-title">
+            Bootstrap学习笔记01
+        </b>
+    </a>
+    <span class="arc-date">
+        2016-04-02
+    </span>
+</div>
+
+
+                
+
+                    
+                    
+                    <div class="arc-preview">
+    <a href="/2016/03/17/Adobe2014软件合集/">
+        <b class="arc-title">
+            资源分享：Adobe CC 2014各种软件[合集]
+        </b>
+    </a>
+    <span class="arc-date">
+        2016-03-17
+    </span>
+</div>
+
+
+                
+
+                    
+                    
+                    <div class="arc-preview">
+    <a href="/2016/03/15/Markdown语法入门/">
+        <b class="arc-title">
+            Markdown语法入门简介
+        </b>
+    </a>
+    <span class="arc-date">
+        2016-03-15
+    </span>
+</div>
+
+
+                
+
+                    
+                    
+                    <div class="arc-preview">
+    <a href="/2016/03/13/使用Hexo搭建博客/">
+        <b class="arc-title">
+            梳理：怎样使用Hexo搭建博客并部署到GitHub。
+        </b>
+    </a>
+    <span class="arc-date">
+        2016-03-13
+    </span>
+</div>
+
+
+                
+
+                    
+                    
+                    <div class="arc-preview">
+    <a href="/2016/01/01/hello-world/">
+        <b class="arc-title">
+            Hello World
+        </b>
+    </a>
+    <span class="arc-date">
+        2016-01-01
+    </span>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+
+
+        <div class="col-lg-3 col-lg-offset-0 col-md-3 col-md-offset-0 col-sm-12 col-xs-12 sidebar-container">
+
+            
+            <div class="side-wrap">
+                <h3 class="side-title"><i class="fa fa-book"></i> 最近更新</h3>
+                <div class="side-list">
+                    <ul>
+                        
+                        <li>
+                            <a href="/2017/05/22/lazyImage原生JS图片懒加载/">lazyImage原生JS图片懒加载</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/2017/02/20/原生JS实现图片预览/">原生JS实现图片预览</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/2017/02/17/PHP简单的注册与登录验证/">PHP简单的登录验证</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/2016/12/06/多说评论区显示UA标示/">多说评论区显示UA与博主标示</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/2016/12/06/Hexo博客使用不蒜子统计功能/">Hexo博客使用不蒜子统计功能</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/2016/04/07/Less语法学习笔记/">Less语法学习笔记</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/2016/04/06/Bootstrap学习笔记02/">Bootstrap学习笔记02</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/2016/04/02/Bootstrap学习笔记01/">Bootstrap学习笔记01</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a target="_blank" href="http://weibo.com/1935873681">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/-nomo">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+
+                    
+
+                    
+                    <li>
+                        <a target="_blank"  href="https://github.com/isnomo">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                    
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/炜皓-项-296585126">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Nomo 2017
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">本站访问量: <span id="busuanzi_value_site_pv"></span> 次</span>丨
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">本文阅读量: <span id="busuanzi_value_page_pv"></span> 次</span>
+                    <br>
+                    <a href="https://hexo.io/">Hexo</a> Theme by <a href="https://blog.isnomo.com/">_Nomo</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<script src="/js/hover3d.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".hover3D").hover3d({
+            selector: ".hover3D_card",
+            perspective: 3000,
+            sensitivity: 35
+        });
+    });
+</script>
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://blog.isnomo.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    var _baId = '68e322350c5e69b5a924978892f21122';
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?" + _baId;
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+<!--&lt;!&ndash; swiftype 站内搜索引擎 &ndash;&gt;-->
+<!--<script type="text/javascript">-->
+  <!--(function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){-->
+  <!--(w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);-->
+  <!--e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);-->
+  <!--})(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');-->
+
+  <!--_st('install','null','2.0.0');-->
+<!--</script>-->
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="/img/new_aman.jpg">
+</body>
+
+</html>

@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Nomo Hsiang的博客，关注前段技术。">
+    <meta name="keyword" content="Nomo,isnomo,NOMO,nomo博客,nomo blog,isnomo blog">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="icon" href="/img/icon.png">
+    <link rel="alternate" type="application/atom+xml" title="Nomo" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        作品集｜Nomo&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://blog.isnomo.com/works/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('/img/mobile.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "false" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    Nomo
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="blog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">首页</a>
+                    </li>
+					
+					
+                    
+                        
+							
+								
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">标签</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/archives/">归档</a>
+                        </li>
+							
+						
+                    
+                        
+							
+								
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/works/">作品集</a>
+                        </li>
+							
+						
+                    
+					
+					
+						<li>
+							<a href="/about">关于我</a>
+						</li>
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#blog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+<style>
+    * {
+        /*border: thin red solid;*/
+    }
+
+    header .bg-header {
+        height: 500px;
+        background-image: url('/img/blog_header1.jpg');
+        background-color: #62A4FF;
+    }
+
+    /*头像*/
+    .bg-header .avatar img {
+        border-radius: 50%;
+        margin-top: 100px;
+        max-width: 170px;
+    }
+
+    .bg-header h1,
+    .bg-header h2 {
+        color: white;
+    }
+
+    /*姓名*/
+    .bg-header h1 {
+        letter-spacing: 2px;
+        text-shadow: 0 0 40px black;
+    }
+
+    /*描述*/
+    .bg-header h2 {
+        font-size: 18px;
+        margin-top: 12px;
+        text-shadow: 0 0 40px black;
+    }
+
+    /*整个作品展示区*/
+    section .works-area {
+        margin-top: -100px;
+    }
+
+    .works-area .works-item {
+        border-radius: 2px;
+        border: 1px solid #eee8d5;
+        margin-bottom: 50px;
+        box-shadow: 8px 5px 10px rgba(0, 0, 0, .2);
+    }
+
+    .works-item-img {
+        margin: auto -26px;
+    }
+
+    .works-item-img img {
+        width: 100%;
+    }
+
+    .works-area .works-item {
+        background: white;
+        padding: 5px 25px;
+    }
+
+    .works-area .footer {
+        padding-top: 10px;
+        border-top: thin #eee solid;
+    }
+
+    .works-area .footer .btn {
+        padding: 7px 9px;
+        border-radius: 2px;
+        float: right;
+        margin: 8px 0;
+        text-transform: none;
+        font-size: 12px;
+        font-style: italic;
+        background: #0085a1;
+        border: none;
+        color: #fff;
+        transition: all .3s ease-in-out;
+
+    }
+    .works-area .footer .btn:hover{
+        background:#FC7097;
+    }
+    .works-item .works-content {
+        padding-top: 5px;
+    }
+
+    .works-item .title {
+        padding-top: 6px;
+        font-weight: 600;
+        color: #555;
+    }
+
+    .works-item .title h3 {
+        display: inline-block;
+        margin: 0 15px;
+        height: 33px;
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .works-item .title .title-date {
+        float: right;
+        font-size: 18px;
+    }
+    .works-item .use{
+        display: inline-block;
+    }
+    .works-item .use span {
+        display: inline-block;
+        font-size: 13px;
+        border-radius: 3px;
+        padding: 0 5px;
+        border: thin solid #c5aea6;
+        margin-top: 10px;
+    }
+
+    .works-item .subtitle {
+        font-size: 17px;
+    }
+
+    @media screen and (max-width: 400px) {
+        .works-item .footer .use {
+            font-size: 14px;
+        }
+
+        .works-item .works-item-img {
+            height: 200px;
+        }
+
+        .bg-header .avatar img {
+            max-width: 150px;
+        }
+
+        .bg-header h1 {
+            font-size: 24px;
+        }
+
+        section .works-area {
+            margin-top: 10px;
+        }
+    }
+</style>
+
+<div class="works-container" style="background-color: #fafafa">
+    <header>
+        <div class="bg-header text-center">
+            <div class="profile">
+                <div class="avatar">
+                    <img src="/img/new_aman.jpg">
+                </div>
+                <div class="personal-profile">
+                    <h1>
+                        _Nomo
+                    </h1>
+                    <h2>
+                        个人作品集
+                    </h2>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <section class="row">
+            <div class="col-sm-10 col-sm-offset-1
+                        col-md-8 col-md-offset-2
+                      works-area">
+                
+                <div class="works-item">
+                    <div class="title">
+                        <h3>
+                            玄墨装饰官网
+                        </h3>
+                        <span class="title-date text-muted">
+                            2017-4-20
+                        </span>
+                    </div>
+                    <div class="works-item-img">
+                        <img src="/img/works/xmzs.jpg">
+                    </div>
+                    <div class="works-content">
+                        <p class="subtitle">一个装修网站，使用到CDN加速视频以及图片的加载</p>
+
+                        <p class="text-muted">欢迎页主要使用HTML5的video属性来展示自己剪辑的视频，并使用CDN技术加速视频的加载，主页等其他页面使用Bootstrap编写并完成响应式兼容。案例介绍页面图片较多，所以使用了图片懒加载的方法。页面的表单提交使用Ajax技术。后台部分使用PHP和Mysql。
+                        </p>
+                    </div>
+                    <div class="footer clearfix">
+                        <div class="use text-warning">
+                            <span>Javascript</span>
+                            <span>Bootstrap</span>
+                            <span>CDN</span>
+                            <span>PHP</span>
+                        </div>
+                        <a class=" btn btn-default" href="http://www.xuanmozs.com" target="_blank"> Open it</a>
+                    </div>
+                </div>
+
+                <div class="works-item">
+                    <div class="title">
+                        <h3>
+                            久爱致和官网制作
+                        </h3>
+                        <span class="title-date text-muted">
+                            2017-3-10
+                        </span>
+                    </div>
+                    <div class="works-item-img">
+                        <img src="/img/works/jazh.jpg">
+                    </div>
+                    <div class="works-content">
+                        <p class="subtitle">前端使用了jQuery、Bootstrap以及PHP、MySql做的后台页面管理。 </p>
+
+                        <p class="text-muted">帮朋友制作一个企业形象展示性的网站，大体风格已经定好。根据所提供的一些图片进行设计与代码的制作，总体的制作时间大概花费两周。因为之前不是太熟悉PHP语言，而他们又需求一个页面管理后台，所以啃书查资料自己学了一些PHP，MySql知识。目前网站也算是完成上线了，因为首次制作肯定会有一些不足，大家可以在留言板提意见。
+                        </p>
+                    </div>
+                    <div class="footer clearfix">
+                        <div class="use text-warning">
+                            <span>jQuery</span>
+                            <span>Bootstrap</span>
+                            <span>PHP</span>
+                        </div>
+                        <a class=" btn btn-default" href="http://www.jiuaizhihe.com" target="_blank"> Open it</a>
+                    </div>
+                </div>
+
+                <div class="works-item">
+                    <div class="title">
+                        <h3>
+                            360eet智能硬件教育平台官网
+                        </h3>
+                        <span class="title-date text-muted">
+                            2017-2-17
+                        </span>
+                    </div>
+                    <div class="works-item-img">
+                        <img src="/img/works/360eet.png">
+                    </div>
+                    <div class="works-content">
+                        <p class="subtitle">由我负责设计与前端工作，并参与制定公司新网站的模块结构。</p>
+
+                        <p class="text-muted">
+                            从参与的网站模型结构设计到做出设计稿，再到完成前端代码的完成。网站主要目的是完成在线课堂与高校活动的展示与应用，辅助衔接论坛与淘宝店铺。让用户可以在网站浏览学习课程视频，并带有回复问答功能。高校活动主要是宣传和报名参与。
+                        </p>
+                    </div>
+                    <div class="footer clearfix">
+                        <div class="use text-warning">
+                            <span>jQuery</span>
+                            <span>Bootstrap</span>
+                            <span>Fontawesome</span>
+                        </div>
+                        <a class=" btn btn-default" href="http://www.360eet.com" target="_blank"> Open it</a>
+                    </div>
+                </div>
+
+                <div class="works-item">
+                    <div class="title">
+                        <h3>
+                            个人博客制作
+                        </h3>
+                        <span class="title-date text-muted">
+                            2017-1-21
+                        </span>
+                    </div>
+                    <div class="works-item-img">
+                        <img src="/img/works/hexo.png">
+                    </div>
+                    <div class="works-content">
+                        <p class="subtitle">通过Github和Hexo建设一个个人博客</p>
+
+                        <p class="text-muted">
+                            制作一个自己的博客，通过使用Hexo和Github来完成，网站托管在Github，在网站中发布自己的学习经历与技术问题。
+                        </p>
+                    </div>
+                    <div class="footer clearfix">
+                        <div class="use text-warning">
+                            <span>Github</span>
+                            <span>Hexo</span>
+                        </div>
+                        <a class=" btn btn-default" href="http://blog.isnomo.com" target="_blank"> Open it</a>
+                    </div>
+                </div>
+
+
+            </div>
+        </section>
+    </div>
+</div>
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a target="_blank" href="http://weibo.com/1935873681">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/-nomo">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+
+                    
+
+                    
+                    <li>
+                        <a target="_blank"  href="https://github.com/isnomo">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                    
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/炜皓-项-296585126">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Nomo 2017
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">本站访问量: <span id="busuanzi_value_site_pv"></span> 次</span>丨
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">本文阅读量: <span id="busuanzi_value_page_pv"></span> 次</span>
+                    <br>
+                    <a href="https://hexo.io/">Hexo</a> Theme by <a href="https://blog.isnomo.com/">_Nomo</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<script src="/js/hover3d.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".hover3D").hover3d({
+            selector: ".hover3D_card",
+            perspective: 3000,
+            sensitivity: 35
+        });
+    });
+</script>
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://blog.isnomo.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    var _baId = '68e322350c5e69b5a924978892f21122';
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?" + _baId;
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+<!--&lt;!&ndash; swiftype 站内搜索引擎 &ndash;&gt;-->
+<!--<script type="text/javascript">-->
+  <!--(function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){-->
+  <!--(w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);-->
+  <!--e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);-->
+  <!--})(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');-->
+
+  <!--_st('install','null','2.0.0');-->
+<!--</script>-->
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="/img/new_aman.jpg">
+</body>
+
+</html>

@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Nomo Hsiang的博客，关注前段技术。">
+    <meta name="keyword" content="Nomo,isnomo,NOMO,nomo博客,nomo blog,isnomo blog">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="icon" href="/img/icon.png">
+    <link rel="alternate" type="application/atom+xml" title="Nomo" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        Less语法学习笔记｜Nomo&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://blog.isnomo.com/2016/04/07/Less语法学习笔记/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('/img/mobile.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    Nomo
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="blog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">首页</a>
+                    </li>
+					
+					
+                    
+                        
+							
+								
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">标签</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/archives/">归档</a>
+                        </li>
+							
+						
+                    
+                        
+							
+								
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/works/">作品集</a>
+                        </li>
+							
+						
+                    
+					
+					
+						<li>
+							<a href="/about">关于我</a>
+						</li>
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#blog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="null/img/haha.png">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('null/img/haha.png?imageView2/1/w/1400/h/400/interlace/1/q/90')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>Less语法学习笔记</h1>
+                    
+                    <h2 class="subheading">自用学习笔记</h2>
+                    
+                    <span class="meta">
+                         作者 _Nomo
+                        <span>
+                          日期 2016-04-07
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#前端技术"
+                           title="前端技术">前端技术</a>
+                        
+                        <a class="tag" href="/tags/#CSS"
+                           title="CSS">CSS</a>
+                        
+                        <a class="tag" href="/tags/#Less"
+                           title="Less">Less</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            Less语法学习笔记
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p><excerpt in="" index="" |="" 首页摘要=""></excerpt></p>
+<blockquote>
+<p> Less 将 CSS 赋予了动态语言的特性，如 变量，继承，运算，函数等等。 Less 既可以在 客户端 上运行 (支持IE 6+, Webkit, Firefox)，也可以借助Node.js或者Rhino在服务端运行。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="Less的使用方法"><a href="#Less的使用方法" class="headerlink" title="Less的使用方法"></a>Less的使用方法</h2><h3 id="客户端使用Less文件"><a href="#客户端使用Less文件" class="headerlink" title="客户端使用Less文件"></a>客户端使用Less文件</h3><blockquote>
+<p>在客户端使用Less文件——效率较低 (不推荐使用)<br>1、编写 <code>.less</code> 源文件；<br>2、编写 <code>.html</code> 文件，引入 <code>.less</code> ，同时再引入less.js文件；<br>3、客户端下载 <code>.html</code> 文件，再下载less.js，再下载 <code>.less</code> 文件，使用less.js把 <code>.less</code> 文件在浏览器的内存中执行编译操作，转换为css样式。<br>点击下载 <a href="img/down/less.js.zip">Less.js</a></p>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line">  <span class="comment">&lt;!--在客户端应用less，必须先导入.less文件，再调用less.js--&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet/less"</span> <span class="attr">href</span>=<span class="string">"css/my.less"</span>&gt;</span> <span class="comment">&lt;!--注意此处的rel值--&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/less.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">h1</span>&gt;</span>LESS样式语言<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="服务器端使用Less文件"><a href="#服务器端使用Less文件" class="headerlink" title="服务器端使用Less文件"></a>服务器端使用Less文件</h3><blockquote>
+<p>服务器端使用Less文件方法：<br>1、程序员编写 <code>.less</code> 源文件；<br>2、程序员在自己的电脑中安装Less编译器，运行它，把 <code>.less</code> 编译为 <code>.css</code> 文件；<br>3、程序员编写 <code>.html</code> 文件，引入编译得到的 <code>.css</code> 文件；<br>4、客户端浏览器下载 <code>.html</code> 及其引入的 <code>.css</code> 文件即可。</p>
+</blockquote>
+<h3 id="安装Less编译器"><a href="#安装Less编译器" class="headerlink" title="安装Less编译器"></a>安装Less编译器</h3><blockquote>
+<p>1、下载并安装一款服务器端JS解释程序 —— NodeJS等；<br>  2、下载Less编译器程序 <code>lessc</code> ，一个JS文件；<br>  3、运行JS解释程序，执行lessc文件，把.less文件编译为.css文件。<br>  点击下载编译器程序 <a href="img/down/npm.zip">lessc</a> 。</p>
+</blockquote>
+<p>具体又有两种使用方法：<br>1)使用Node.js直接在命令行调用命令:<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">node</span> <span class="selector-tag">E</span>:\<span class="selector-tag">npm</span>\<span class="selector-tag">node_modules</span>\<span class="selector-tag">less</span>\<span class="selector-tag">bin</span>\<span class="selector-tag">lessc</span>       <span class="comment">/* d:/1.less 会解析生成一个 d:/1.css */</span></div></pre></td></tr></table></figure></p>
+<p>2)直接把Less编译器配置为 WebStorm 中的FileWatcher，用户只要一创建或修改.less文件，立即自动编译出.css文件。<br><img src="/img/less/01.png" class="[class names]" width="400" title="[200] Nodeweb">     <img src="/img/less/02.png" class="[class names]" width="400" title="[200] Nodeweb"></p>
+<h2 id="Less语法"><a href="#Less语法" class="headerlink" title="Less语法"></a>Less语法</h2><h3 id="less的基本语法"><a href="#less的基本语法" class="headerlink" title="less的基本语法"></a>less的基本语法</h3><blockquote>
+<p>Less支持CSS所有的语法和多行注释(会被编译到.css中)和单行注释(不会被编译到.css中)。</p>
+</blockquote>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">body</span> &#123;</div><div class="line">  <span class="attribute">margin</span>: <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"><span class="comment">/*多行注释*/</span></div><div class="line"><span class="comment">//单行注释</span></div></pre></td></tr></table></figure>
+<h3 id="变量的概念"><a href="#变量的概念" class="headerlink" title="变量的概念"></a>变量的概念</h3><blockquote>
+<p>语法：  @变量名: 变量值;</p>
+</blockquote>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//Less支持变量的概念</span></div><div class="line"><span class="variable">@jd-red:</span> <span class="number">#ff0000</span>;  <span class="comment">//颜色</span></div><div class="line"><span class="variable">@half-opac:</span> <span class="number">0.5</span>;   <span class="comment">//数值</span></div><div class="line"><span class="variable">@md-border:</span> <span class="number">4px</span>;   <span class="comment">//数值+单位</span></div><div class="line"><span class="variable">@std-font:</span> <span class="string">"SimHei"</span>;  <span class="comment">//字符串</span></div><div class="line"><span class="variable">@default-border:</span> solid; <span class="comment">//样式值</span></div><div class="line"><span class="variable">@global-link:</span>  underline;  <span class="comment">//样式值</span></div><div class="line"></div><div class="line"><span class="selector-class">.alert</span> &#123;</div><div class="line">  <span class="attribute">border</span>: <span class="variable">@md-border</span> <span class="variable">@default-border</span> <span class="variable">@jd-red</span>;</div><div class="line">  <span class="attribute">color</span>: <span class="variable">@jd-red</span>;</div><div class="line">  <span class="attribute">background</span>: <span class="variable">@jd-red</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>得到的CSS样式：</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.alert</span> &#123;</div><div class="line">  <span class="attribute">border</span>: <span class="number">4px</span> solid <span class="number">#ff0000</span>;</div><div class="line">  <span class="attribute">color</span>: <span class="number">#ff0000</span>;</div><div class="line">  <span class="attribute">background</span>: <span class="number">#ff0000</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="样式的混入-混合"><a href="#样式的混入-混合" class="headerlink" title="样式的混入/混合"></a>样式的混入/混合</h3><blockquote>
+<p>语法：<br>.选择器1 {  样式;  }</p>
+<p>.选择器2 {<br>   css样式；<br>   .选择器1;<br>}</p>
+</blockquote>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//超级变量——样式混入</span></div><div class="line"><span class="selector-class">.border-box</span> &#123;</div><div class="line">  <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#aaa</span>;</div><div class="line">  <span class="attribute">background</span>: <span class="number">#eee</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.well</span> &#123;</div><div class="line">  <span class="selector-class">.border-box</span>;</div><div class="line">  <span class="attribute">padding</span>: <span class="number">20px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.panel</span> &#123;</div><div class="line">  <span class="selector-class">.border-box</span>;</div><div class="line">  <span class="attribute">margin</span>: <span class="number">10px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>得到的CSS样式：</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.border-box</span> &#123;</div><div class="line">  <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#aaa</span>;</div><div class="line">  <span class="attribute">background</span>: <span class="number">#eee</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.well</span> &#123;</div><div class="line">  <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#aaa</span>;</div><div class="line">  <span class="attribute">background</span>: <span class="number">#eee</span>;</div><div class="line">  <span class="attribute">padding</span>: <span class="number">20px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.panel</span> &#123;</div><div class="line">  <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#aaa</span>;</div><div class="line">  <span class="attribute">background</span>: <span class="number">#eee</span>;</div><div class="line">  <span class="attribute">margin</span>: <span class="number">10px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="混合时带参数"><a href="#混合时带参数" class="headerlink" title="混合时带参数"></a>混合时带参数</h3><blockquote>
+<p>语法：<br>.选择器1(形参列表) {  css样式;  }<br>.选择器2 {<br>css样式；<br>.选择器1(实参列表);<br>}</p>
+</blockquote>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.border-box</span>(<span class="variable">@bw</span>, <span class="variable">@bc</span>:<span class="number">#eee</span>) &#123;</div><div class="line">  <span class="attribute">border</span>: <span class="variable">@bw</span> solid <span class="variable">@bc</span>;</div><div class="line">  <span class="attribute">background</span>: <span class="number">#eee</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.well</span> &#123;</div><div class="line">  <span class="selector-class">.border-box</span>(<span class="number">10px</span>);</div><div class="line">  <span class="attribute">padding</span>: <span class="number">20px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.panel</span> &#123;</div><div class="line">  <span class="selector-class">.border-box</span>(<span class="number">20px</span>, <span class="number">#ccc</span>);</div><div class="line">  <span class="attribute">margin</span>: <span class="number">10px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>得到的CSS样式(.border-box不会再出现在css中)：</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.well</span> &#123;</div><div class="line">  <span class="attribute">border</span>: <span class="number">10px</span> solid <span class="number">#eeeeee</span>;</div><div class="line">  <span class="attribute">background</span>: <span class="number">#eee</span>;</div><div class="line">  <span class="attribute">padding</span>: <span class="number">20px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.panel</span> &#123;</div><div class="line">  <span class="attribute">border</span>: <span class="number">20px</span> solid <span class="number">#cccccc</span>;</div><div class="line">  <span class="attribute">background</span>: <span class="number">#eee</span>;</div><div class="line">  <span class="attribute">margin</span>: <span class="number">10px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="样式选择器嵌套"><a href="#样式选择器嵌套" class="headerlink" title="样式选择器嵌套"></a>样式选择器嵌套</h3><blockquote>
+<p>语法：<br>.选择器1 {<br>   css样式;<br>   .选择器2 {  css样式；  }<br>}<br><code>极大的方便了以后的修改与维护</code></p>
+</blockquote>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*样式选择器嵌套*/</span></div><div class="line"><span class="selector-class">.main</span> &#123;</div><div class="line">  <span class="attribute">width</span>: <span class="number">1211px</span>;</div><div class="line">  <span class="selector-class">.left</span> &#123;</div><div class="line">    <span class="attribute">float</span>: left;</div><div class="line">    <span class="attribute">width</span>: <span class="number">20%</span>;</div><div class="line">    <span class="selector-tag">ul</span> &#123;</div><div class="line">      <span class="attribute">list-style</span>:none;</div><div class="line">      <span class="selector-tag">li</span> &#123;</div><div class="line">        <span class="attribute">padding</span>: <span class="number">0</span>;</div><div class="line">        &gt; <span class="selector-tag">a</span> &#123;</div><div class="line">          <span class="attribute">text-decoration</span>: none;</div><div class="line">          <span class="selector-tag">&amp;</span><span class="selector-pseudo">:hover</span> &#123;</div><div class="line">            <span class="attribute">text-decoration</span>: underline;</div><div class="line">          &#125;</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>得到的CSS样式：</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*样式选择器嵌套*/</span></div><div class="line"><span class="selector-class">.main</span> &#123;</div><div class="line">  <span class="attribute">width</span>: <span class="number">1211px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.main</span> <span class="selector-class">.left</span> &#123;</div><div class="line">  <span class="attribute">float</span>: left;</div><div class="line">  <span class="attribute">width</span>: <span class="number">20%</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.main</span> <span class="selector-class">.left</span> <span class="selector-tag">ul</span> &#123;</div><div class="line">  <span class="attribute">list-style</span>: none;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.main</span> <span class="selector-class">.left</span> <span class="selector-tag">ul</span> <span class="selector-tag">li</span> &#123;</div><div class="line">  <span class="attribute">padding</span>: <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.main</span> <span class="selector-class">.left</span> <span class="selector-tag">ul</span> <span class="selector-tag">li</span> &gt; <span class="selector-tag">a</span> &#123;</div><div class="line">  <span class="attribute">text-decoration</span>: none;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.main</span> <span class="selector-class">.left</span> <span class="selector-tag">ul</span> <span class="selector-tag">li</span> &gt; <span class="selector-tag">a</span><span class="selector-pseudo">:hover</span> &#123;</div><div class="line">  <span class="attribute">text-decoration</span>: underline;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="算术运算功能"><a href="#算术运算功能" class="headerlink" title="算术运算功能"></a>算术运算功能</h3><blockquote>
+<p>可以执行对数值（可以带单位）、颜色、大小进行运算。</p>
+</blockquote>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*Less算术运算*/</span></div><div class="line"><span class="variable">@cutter-width:</span> <span class="number">30px</span>; </div><div class="line"><span class="variable">@half-opacity:</span> <span class="number">0.5</span>;</div><div class="line"><span class="variable">@navbar-height:</span> <span class="number">60px</span>;</div><div class="line"><span class="variable">@logo-height:</span> <span class="number">24px</span>;</div><div class="line"></div><div class="line"><span class="selector-class">.col-md-1</span> &#123;</div><div class="line">  <span class="attribute">padding-left</span>: <span class="variable">@cutter-width</span>/<span class="number">2</span>;</div><div class="line">  <span class="attribute">padding-right</span>: <span class="variable">@cutter-width</span>/<span class="number">2</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.modal</span> &#123;</div><div class="line">  <span class="attribute">background</span>: rgba(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>, <span class="variable">@half-opacity</span>*<span class="number">1.5</span>);</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.logo</span> &#123;</div><div class="line">  <span class="attribute">margin-top</span>: (<span class="variable">@navbar-height</span> - <span class="variable">@logo-height</span>)/<span class="number">2</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>得到的CSS样式：</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*Less算术运算*/</span></div><div class="line"><span class="selector-class">.col-md-1</span> &#123;</div><div class="line">  <span class="attribute">padding-left</span>: <span class="number">15px</span>;</div><div class="line">  <span class="attribute">padding-right</span>: <span class="number">15px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.modal</span> &#123;</div><div class="line">  <span class="attribute">background</span>: <span class="built_in">rgba</span>(0, 0, 0, 0.75);</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.logo</span> &#123;</div><div class="line">  <span class="attribute">margin-top</span>: <span class="number">18px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="预定义功能函数"><a href="#预定义功能函数" class="headerlink" title="预定义功能函数"></a>预定义功能函数</h3><blockquote>
+<p>image-width() , image-height() , ceil() , floor() , round()<br>lighten(color, 百分比) , darken(color, 百分比)</p>
+</blockquote>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*Less预定义的函数*/</span></div><div class="line"><span class="selector-class">.xiao2</span> &#123;</div><div class="line">  <span class="attribute">height</span>: image-height(<span class="string">'../img/2.jpg'</span>);</div><div class="line">  <span class="attribute">width</span>: image-width(<span class="string">'../img/2.jpg'</span>);</div><div class="line">&#125;</div><div class="line"><span class="variable">@md-container-width:</span> <span class="number">970px</span>;</div><div class="line"><span class="selector-class">.col-md-1</span> &#123;</div><div class="line">  <span class="attribute">width</span>: floor(<span class="variable">@md-container-width</span>/<span class="number">12</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>得到的CSS样式：</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*Less预定义的函数*/</span></div><div class="line"><span class="selector-class">.xiao2</span> &#123;</div><div class="line">  <span class="attribute">height</span>: <span class="number">150px</span>;</div><div class="line">  <span class="attribute">width</span>: <span class="number">200px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.col-md-1</span> &#123;</div><div class="line">  <span class="attribute">width</span>: <span class="number">80px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="文件导入功能"><a href="#文件导入功能" class="headerlink" title="文件导入功能"></a>文件导入功能</h3><blockquote>
+<p>实现根据逻辑功能，把样式文件分解，便于分工协作。<br>CSS中也有文件导入，但会增加HTTP请求次数；—— 不推荐使用<br>但Less中的文件导入，在服务器端把要引入的文件包含进入当前生成的.css，从而组成一个大的完整的.css文件。—— 推荐使用</p>
+</blockquote>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*Less引入CSS文件没有任何好处*/</span></div><div class="line"><span class="comment">/*@import "panel.css";*/</span></div><div class="line"><span class="comment">/*@import "carousel.css";*/</span></div><div class="line"><span class="comment">/*@import "modal.css";*/</span></div><div class="line"></div><div class="line"><span class="keyword">@import</span> <span class="string">"carousel.less"</span>;</div><div class="line"><span class="keyword">@import</span> <span class="string">"modal.less"</span>;</div><div class="line"><span class="keyword">@import</span> <span class="string">"panel"</span>;  <span class="comment">//可以省略.less后缀</span></div></pre></td></tr></table></figure>
+<ul>
+<li>得到的CSS样式是把这个几个less分别解析并融合：</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.carousel</span> &#123;</div><div class="line">  <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#aaa</span>;</div><div class="line">  <span class="attribute">padding</span>: <span class="number">10px</span>;</div><div class="line">  <span class="attribute">border-radius</span>: <span class="number">4px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.modal</span> &#123;</div><div class="line">  <span class="attribute">position</span>: fixed;</div><div class="line">  <span class="attribute">left</span>: <span class="number">0</span>;</div><div class="line">  <span class="attribute">top</span>: <span class="number">0</span>;</div><div class="line">  <span class="attribute">right</span>: <span class="number">0</span>;</div><div class="line">  <span class="attribute">bottom</span>: <span class="number">0</span>;</div><div class="line">  <span class="attribute">background</span>: <span class="built_in">rgba</span>(0, 0, 0, 0.5);</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.modal-dialog</span> &#123;</div><div class="line">  <span class="attribute">margin</span>: <span class="number">30px</span> auto <span class="number">0</span> auto;</div><div class="line">  <span class="attribute">width</span>: <span class="number">400px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.modal-content</span> &#123;</div><div class="line">  <span class="attribute">background</span>: <span class="number">#fff</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.panel</span> &#123;</div><div class="line">  <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#aaa</span>;</div><div class="line">  <span class="attribute">padding</span>: <span class="number">10px</span>;</div><div class="line">  <span class="attribute">border-radius</span>: <span class="number">4px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="Bootstrap定制"><a href="#Bootstrap定制" class="headerlink" title="Bootstrap定制"></a>Bootstrap定制</h2><blockquote>
+<p>Bootstrap的CSS样式本身就是使用Less写的，里面大量运用了Less的导入和变量功能。<br>值得注意的是，Bootstrap 使用很多的lees文件，但是因为运用大量导入所以只会生成一个有效CSS文件。<br>点击下载 Bootstrap 的 <a href="img/down/bootstrap的less.zip">Less文件</a>。</p>
+</blockquote>
+
+                <hr>
+                
+                <!-- 多说 Share start -->
+                <div class="ds-share"
+                     style="text-align: right"
+                     data-thread-key="2016/04/07/Less语法学习笔记/"
+                     data-title="Less语法学习笔记"
+                     data-url="http://blog.isnomo.com/2016/04/07/Less语法学习笔记/"
+                     data-images="http://blog.isnomo.com/2016/04/07/Less语法学习笔记//img/haha.png"
+                     data-content="
+
+ Less 将 CSS 赋予了动态语言的特性，如 变量，继承，运算，函数等等。 Less ... | Nomo&#39;s blog ">
+                    <div class="ds-share-inline">
+                        <ul class="ds-share-icons-16">
+                            <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
+                            <li><a class="ds-weibo flat" href="javascript:void(0);" data-service="weibo">微博</a></li>
+                            <li><a class="ds-wechat flat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+                            <li><a class="ds-qq flat" href="javascript:void(0);" data-service="qq">QQ</a></li>
+                            <li><a class="ds-qzone flat" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+                            <li><a class="ds-douban flat" href="javascript:void(0);" data-service="douban">豆瓣</a></li>
+                        </ul>
+                        <div class="ds-share-icons-more">
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <!-- 多说 Share end-->
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2016/12/06/Hexo博客使用不蒜子统计功能/" data-toggle="tooltip" data-placement="top"
+                           title="Hexo博客使用不蒜子统计功能">&larr; 上一篇</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2016/04/06/Bootstrap学习笔记02/" data-toggle="tooltip" data-placement="top"
+                           title="Bootstrap学习笔记02">下一篇 &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                         data-thread-key="2016/04/07/Less语法学习笔记/"
+                         data-title="Less语法学习笔记"
+                         data-url="http://blog.isnomo.com/2016/04/07/Less语法学习笔记/">
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Less的使用方法"><span class="toc-text">Less的使用方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#客户端使用Less文件"><span class="toc-text">客户端使用Less文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#服务器端使用Less文件"><span class="toc-text">服务器端使用Less文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装Less编译器"><span class="toc-text">安装Less编译器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Less语法"><span class="toc-text">Less语法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#less的基本语法"><span class="toc-text">less的基本语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#变量的概念"><span class="toc-text">变量的概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#样式的混入-混合"><span class="toc-text">样式的混入/混合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#混合时带参数"><span class="toc-text">混合时带参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#样式选择器嵌套"><span class="toc-text">样式选择器嵌套</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#算术运算功能"><span class="toc-text">算术运算功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#预定义功能函数"><span class="toc-text">预定义功能函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文件导入功能"><span class="toc-text">文件导入功能</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bootstrap定制"><span class="toc-text">Bootstrap定制</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/Tags/">标签</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#前端技术"
+                           title="前端技术">前端技术</a>
+                        
+                        <a class="tag" href="/tags/#CSS"
+                           title="CSS">CSS</a>
+                        
+                        <a class="tag" href="/tags/#Less"
+                           title="Less">Less</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">友情链接</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="http://hexo.io">HEXO</a></li>
+                        
+                        <li><a href="http://isnomo.com">isNomo</a></li>
+                        
+                        <li><a href="http://moxfive.xyz/">MOxFIVE</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'nomo';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user};
+    (function () {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';
+        ds.async = true;
+//        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.src = '/js/embed_ua.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a target="_blank" href="http://weibo.com/1935873681">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/-nomo">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+
+                    
+
+                    
+                    <li>
+                        <a target="_blank"  href="https://github.com/isnomo">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                    
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/炜皓-项-296585126">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Nomo 2017
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">本站访问量: <span id="busuanzi_value_site_pv"></span> 次</span>丨
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">本文阅读量: <span id="busuanzi_value_page_pv"></span> 次</span>
+                    <br>
+                    <a href="https://hexo.io/">Hexo</a> Theme by <a href="https://blog.isnomo.com/">_Nomo</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<script src="/js/hover3d.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".hover3D").hover3d({
+            selector: ".hover3D_card",
+            perspective: 3000,
+            sensitivity: 35
+        });
+    });
+</script>
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://blog.isnomo.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    var _baId = '68e322350c5e69b5a924978892f21122';
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?" + _baId;
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+<!--&lt;!&ndash; swiftype 站内搜索引擎 &ndash;&gt;-->
+<!--<script type="text/javascript">-->
+  <!--(function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){-->
+  <!--(w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);-->
+  <!--e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);-->
+  <!--})(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');-->
+
+  <!--_st('install','null','2.0.0');-->
+<!--</script>-->
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="/img/new_aman.jpg">
+</body>
+
+</html>

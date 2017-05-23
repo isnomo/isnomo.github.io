@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Nomo Hsiang的博客，关注前段技术。">
+    <meta name="keyword" content="Nomo,isnomo,NOMO,nomo博客,nomo blog,isnomo blog">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="icon" href="/img/icon.png">
+    <link rel="alternate" type="application/atom+xml" title="Nomo" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        Bootstrap学习笔记01｜Nomo&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://blog.isnomo.com/2016/04/02/Bootstrap学习笔记01/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('/img/mobile.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    Nomo
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="blog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">首页</a>
+                    </li>
+					
+					
+                    
+                        
+							
+								
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">标签</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/archives/">归档</a>
+                        </li>
+							
+						
+                    
+                        
+							
+								
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/works/">作品集</a>
+                        </li>
+							
+						
+                    
+					
+					
+						<li>
+							<a href="/about">关于我</a>
+						</li>
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#blog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="/img/blog_header.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('/img/blog_header.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>Bootstrap学习笔记01</h1>
+                    
+                    <h2 class="subheading">自用学习笔记</h2>
+                    
+                    <span class="meta">
+                         作者 _Nomo
+                        <span>
+                          日期 2016-04-02
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#前端技术"
+                           title="前端技术">前端技术</a>
+                        
+                        <a class="tag" href="/tags/#Bootstrap"
+                           title="Bootstrap">Bootstrap</a>
+                        
+                        <a class="tag" href="/tags/#CSS"
+                           title="CSS">CSS</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            Bootstrap学习笔记01
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p><excerpt in="" index="" |="" 首页摘要=""></excerpt></p>
+<blockquote>
+<p>Bootstrap来自 Twitter，是目前很受欢迎的前端框架。Bootstrap 是基于 HTML、CSS、JAVASCRIPT 的，它简洁灵活，使得 Web 开发更加快捷。它由Twitter的工程师Mark Otto和Jacob Thornton合作开发，是一个CSS/HTML框架。 </p>
+</blockquote>
+<a id="more"></a>
+<h2 id="起步"><a href="#起步" class="headerlink" title="起步"></a>起步</h2><h3 id="下载模板文件"><a href="#下载模板文件" class="headerlink" title="下载模板文件"></a>下载模板文件</h3><blockquote>
+<p>点击下载文件 <a href="img/down/bootstrap-3.3.5-dist.zip">Bootstrap模板</a>。</p>
+</blockquote>
+<ul>
+<li>下载压缩包之后，将其解压缩到任意目录即可看到以下（压缩版的）目录结构： </li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">bootstrap/</div><div class="line">├── css/</div><div class="line">│   ├── bootstrap<span class="selector-class">.css</span></div><div class="line">│   ├── bootstrap<span class="selector-class">.css</span><span class="selector-class">.map</span></div><div class="line">│   ├── bootstrap<span class="selector-class">.min</span><span class="selector-class">.css</span></div><div class="line">│   ├── bootstrap-theme<span class="selector-class">.css</span></div><div class="line">│   ├── bootstrap-theme<span class="selector-class">.css</span><span class="selector-class">.map</span></div><div class="line">│   └── bootstrap-theme<span class="selector-class">.min</span><span class="selector-class">.css</span></div><div class="line">├── js/</div><div class="line">│   ├── bootstrap<span class="selector-class">.js</span></div><div class="line">│   └── bootstrap<span class="selector-class">.min</span><span class="selector-class">.js</span></div><div class="line">└── fonts/</div><div class="line">    ├── glyphicons-halflings-regular<span class="selector-class">.eot</span></div><div class="line">    ├── glyphicons-halflings-regular<span class="selector-class">.svg</span></div><div class="line">    ├── glyphicons-halflings-regular<span class="selector-class">.ttf</span></div><div class="line">    ├── glyphicons-halflings-regular<span class="selector-class">.woff</span></div><div class="line">    └── glyphicons-halflings-regular.woff2</div></pre></td></tr></table></figure>
+<h3 id="基础模板"><a href="#基础模板" class="headerlink" title="基础模板"></a>基础模板</h3><ul>
+<li>拷贝并粘贴下面给出的 HTML 代码，这就是一个最简单的 Bootstrap 页面了。</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"zh-CN"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"IE=edge"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1"</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Bootstrap 101 Template<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- Bootstrap --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">"css/bootstrap.min.css"</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries --&gt;</span></div><div class="line">    <span class="comment">&lt;!-- WARNING: Respond.js doesn't work if you view the page via file:// --&gt;</span></div><div class="line">    <span class="comment">&lt;!--[if lt IE 9]&gt;</span></div><div class="line">      &lt;script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"&gt;&lt;/script&gt;</div><div class="line">      &lt;script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"&gt;&lt;/script&gt;</div><div class="line">    &lt;![endif]--&gt;</div><div class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>你好，世界！<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- jQuery (necessary for Bootstrap's JavaScript plugins) --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!-- Include all compiled plugins (below), or include individual files as needed --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/bootstrap.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="引入Bootlint"><a href="#引入Bootlint" class="headerlink" title="引入Bootlint"></a>引入Bootlint</h3><blockquote>
+<p>Bootlint：是Bootstrap官方提供的一个HTML/CSS检查工具(js编写的)，可以检查出使用bootstrap.css的页面中常见的HTML和CSS样式方面的错误。</p>
+</blockquote>
+<ul>
+<li>使用方法,引入JS文件后加入以下代码：</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> s = <span class="built_in">document</span>.createElement(<span class="string">"script"</span>);</div><div class="line">        s.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">            bootlint.showLintReportForCurrentDocument([]);</div><div class="line">        &#125;;</div><div class="line">        s.src = <span class="string">"js/bootlint.js"</span>;</div><div class="line">        <span class="built_in">document</span>.body.appendChild(s)</div><div class="line">&#125;)();</div></pre></td></tr></table></figure>
+<h2 id="基础全局CSS样式"><a href="#基础全局CSS样式" class="headerlink" title="基础全局CSS样式"></a>基础全局CSS样式</h2><h3 id="Bootstrap中的CSS-Reset"><a href="#Bootstrap中的CSS-Reset" class="headerlink" title="Bootstrap中的CSS Reset"></a>Bootstrap中的CSS Reset</h3><blockquote>
+<p>Bootstrap改变了所有元素的盒模型设置，改为 <code>border-box</code> 。值得注意的是需要区分 <code>content-box</code> 和 <code>border-box</code> ：<br>1) box-sizing: content-box; （默认值）<br>   盒子总宽=margin+border+padding+width(content)<br>2) box-sizing: border-box;<br>   盒子总宽=margin+width(包含border/padding/content)</p>
+</blockquote>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">* &#123;  <span class="attribute">box-sizing</span>: border-box;  &#125;</div><div class="line"><span class="selector-tag">body</span> &#123;</div><div class="line">  <span class="attribute">font-family</span>: <span class="string">"Helvetica Neue"</span>, Helvetica, Arial, sans-serif;		<span class="comment">/*改用更好看的字体*/</span></div><div class="line">  <span class="attribute">font-size</span>: <span class="number">14px</span>;				<span class="comment">/*改变全局字体大小*/</span></div><div class="line">  <span class="attribute">line-height</span>: <span class="number">1.42857143</span>;</div><div class="line">  <span class="attribute">color</span>: <span class="number">#333</span>;					<span class="comment">/*字体颜色改为深灰色*/</span></div><div class="line">  <span class="attribute">background-color</span>: <span class="number">#fff</span>;</div><div class="line">  <span class="attribute">margin</span>: <span class="number">0</span>;					<span class="comment">/*去掉浏览器默认margin*/</span></div><div class="line">&#125;</div><div class="line"><span class="selector-tag">h1</span>, <span class="selector-class">.h1</span> &#123;</div><div class="line">  <span class="attribute">font-size</span>: <span class="number">36px</span>;				<span class="comment">/*h1~6属性的字体大小与margin*/</span></div><div class="line">&#125;</div><div class="line"><span class="selector-tag">h1</span>, <span class="selector-class">.h1</span>, <span class="selector-tag">h2</span>, <span class="selector-class">.h2</span>, <span class="selector-tag">h3</span>, <span class="selector-class">.h3</span> &#123;</div><div class="line">  <span class="attribute">margin-top</span>: <span class="number">20px</span>;</div><div class="line">  <span class="attribute">margin-bottom</span>: <span class="number">10px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-tag">h4</span>, <span class="selector-class">.h4</span>, <span class="selector-tag">h5</span>, <span class="selector-class">.h5</span>, <span class="selector-tag">h6</span>, <span class="selector-class">.h6</span> &#123;			<span class="comment">/*h1~6属性的字体大小与margin*/</span></div><div class="line">  <span class="attribute">margin-top</span>: <span class="number">10px</span>;</div><div class="line">  <span class="attribute">margin-bottom</span>: <span class="number">10px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-tag">p</span> &#123; <span class="attribute">margin-bottom</span>: <span class="number">10px</span>; &#125;			<span class="comment">/*去掉P元素的下margin*/</span></div><div class="line"><span class="selector-tag">a</span> &#123; <span class="attribute">color</span>: <span class="number">#337ab7</span>; <span class="attribute">text-decoration</span>:none; <span class="attribute">background</span>: transparent; &#125;	<span class="comment">/*更改a元素的字体颜色，下划线和背景颜色*/</span></div><div class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:hover</span> &#123; <span class="attribute">color</span>: <span class="number">#23527c</span>; <span class="attribute">text-decoration</span>:underline; &#125;			<span class="comment">/*修改a元素的hover样式*/</span></div><div class="line"><span class="selector-tag">img</span> &#123; <span class="attribute">border</span>: <span class="number">0</span>;  <span class="attribute">vertical-aling</span>: middle&#125;				<span class="comment">/*图片周围文字的垂直居中*/</span></div><div class="line"><span class="selector-tag">table</span> &#123; <span class="attribute">border-spacing</span>:<span class="number">0</span>; <span class="attribute">border-collapse</span>: collapsed; &#125;			<span class="comment">/*修改table中的border相关样式*/</span></div><div class="line"><span class="selector-tag">ul</span> &#123; <span class="attribute">margin-top</span>: <span class="number">0</span>; <span class="attribute">margin-bottom</span>:<span class="number">10px</span>; &#125;</div></pre></td></tr></table></figure>
+<h3 id="全局CSS样式——按钮"><a href="#全局CSS样式——按钮" class="headerlink" title="全局CSS样式——按钮"></a>全局CSS样式——按钮</h3><blockquote>
+<p>三种形式的按钮： button   input  a<br>  按钮基础class：  .btn<br>  白底黑字按钮class：  .btn-default<br>  五种常用色： .btn-danger / warning / success / info / primary<br>  四种大小： btn-lg / 默认(md) / sm / xs<br>  块级按钮： btn-block</p>
+</blockquote>
+<img src="/img/bootstrap01/01.png" class="[class names]" title="[500] 200 Nodeweb">
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- Standard button --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">class</span>=<span class="string">"btn btn-default"</span>&gt;</span>（默认样式）Default<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- Provides extra visual weight and identifies the primary action in a set of buttons --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">class</span>=<span class="string">"btn btn-primary"</span>&gt;</span>（首选项）Primary<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- Indicates a successful or positive action --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">class</span>=<span class="string">"btn btn-success"</span>&gt;</span>（成功）Success<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- Contextual button for informational alert messages --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">class</span>=<span class="string">"btn btn-info"</span>&gt;</span>（一般信息）Info<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- Indicates caution should be taken with this action --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">class</span>=<span class="string">"btn btn-warning"</span>&gt;</span>（警告）Warning<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- Indicates a dangerous or potentially negative action --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">class</span>=<span class="string">"btn btn-danger"</span>&gt;</span>（危险）Danger<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- Deemphasize a button by making it look like a link while maintaining button behavior --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">class</span>=<span class="string">"btn btn-link"</span>&gt;</span>（链接）Link<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="全局CSS样式——图片"><a href="#全局CSS样式——图片" class="headerlink" title="全局CSS样式——图片"></a>全局CSS样式——图片</h3><blockquote>
+<p> 圆角图片：    .img-rounded<br>圆形图片：    .img-circle<br>缩略图片：    .img-thumbnail<br>响应式图片：.img-responsive { display: block; max-width:100%; height: auto; }</p>
+</blockquote>
+<img src="/img/bootstrap01/03.png" class="[class names]" title="[500] 200 Nodeweb">
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"..."</span> <span class="attr">alt</span>=<span class="string">"..."</span> <span class="attr">class</span>=<span class="string">"img-rounded"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"..."</span> <span class="attr">alt</span>=<span class="string">"..."</span> <span class="attr">class</span>=<span class="string">"img-circle"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"..."</span> <span class="attr">alt</span>=<span class="string">"..."</span> <span class="attr">class</span>=<span class="string">"img-thumbnail"</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="全局CSS样式——文本样式"><a href="#全局CSS样式——文本样式" class="headerlink" title="全局CSS样式——文本样式"></a>全局CSS样式——文本样式</h3><blockquote>
+<p>文本颜色：  .text-danger/warning/success/info/primary<br>  背景颜色：  .bg-danger/warning/success/info/primary<br>  文本对齐：  .text-left/right/center/justify<br>  文本改变大小写：  .text-uppercase/lowercase/capitalize</p>
+</blockquote>
+<img src="/img/bootstrap01/04.png" class="[class names]" title="[500] 200 Nodeweb">
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"text-left"</span>&gt;</span>Left aligned text.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"text-center"</span>&gt;</span>Center aligned text.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"text-right"</span>&gt;</span>Right aligned text.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"text-justify"</span>&gt;</span>Justified text.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"text-nowrap"</span>&gt;</span>No wrap text.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="全局CSS样式——列表样式"><a href="#全局CSS样式——列表样式" class="headerlink" title="全局CSS样式——列表样式"></a>全局CSS样式——列表样式</h3><blockquote>
+<p>不带圆饼/数字提示符的列表：  .list-unstyled<br>  水平列表:  .list-inline</p>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"list-inline"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>...<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="全局CSS样式——表格"><a href="#全局CSS样式——表格" class="headerlink" title="全局CSS样式——表格"></a>全局CSS样式——表格</h3><blockquote>
+<p><code>注意：HTML5规定：TABLE中必须声明tbody、thead、tfoot！即TABLE不能直接放TR！</code><br>  .table    创建一个100%宽度的表格<br>  .table-bordered    表格边框<br>  .table-striped    条状/隔行变色表格<br>  .table-hover      鼠标悬停效果的表格<br>  .table-responsive      响应式表格，注意：该class不能用于table，而用于table的父容器div上。</p>
+</blockquote>
+<img src="/img/bootstrap01/05.png" class="[class names]" title="[500] 200 Nodeweb">
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">class</span>=<span class="string">"table table-striped"</span>&gt;</span></div><div class="line">  ...</div><div class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="全局CSS样式——栅格布局系统"><a href="#全局CSS样式——栅格布局系统" class="headerlink" title="全局CSS样式——栅格布局系统"></a>全局CSS样式——栅格布局系统</h2><h3 id="1-栅格系统中的容器"><a href="#1-栅格系统中的容器" class="headerlink" title="(1)栅格系统中的容器"></a>(1)栅格系统中的容器</h3><blockquote>
+<p>栅格系统中的内容必须放在“容器”元素中，且有“行”和“列”的概念，结构如下：</p>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span>				<span class="comment">&lt;!--&lt;table&gt;--&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"row"</span>&gt;</span>			<span class="comment">&lt;!--&lt;tr&gt;--&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-*-*"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>	<span class="comment">&lt;!--&lt;td&gt;--&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="2-Bootstrap两种容器"><a href="#2-Bootstrap两种容器" class="headerlink" title="(2)Bootstrap两种容器"></a>(2)Bootstrap两种容器</h3><blockquote>
+<p>有 <code>.container</code> , <code>.container-fluid (100%宽)</code> 两种容器;</p>
+</blockquote>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*.container: 定宽容器，一般用于最外层*/</span> </div><div class="line">     <span class="selector-tag">lg-1170px</span>      <span class="selector-tag">md-970px</span>      </div><div class="line">     <span class="selector-tag">sm-750px</span>      <span class="selector-tag">xs-100</span>%</div><div class="line"><span class="selector-class">.container</span> &#123;</div><div class="line">  <span class="attribute">padding-right</span>: <span class="number">15px</span>;</div><div class="line">  <span class="attribute">padding-left</span>: <span class="number">15px</span>;</div><div class="line">  <span class="attribute">margin-right</span>: auto;</div><div class="line">  <span class="attribute">margin-left</span>: auto;</div><div class="line">&#125;</div><div class="line"><span class="comment">/*.container-fluid: 变宽容器，一般用于内层容器*/</span></div><div class="line"><span class="selector-class">.container-fluid</span> &#123;</div><div class="line">  <span class="attribute">padding-right</span>: <span class="number">15px</span>;</div><div class="line">  <span class="attribute">padding-left</span>: <span class="number">15px</span>;</div><div class="line">&#125;</div><div class="line"><span class="comment">/*上述两个容器都有前置和后置内容生成：可以放置子元素的margin越界，以及清除子元素浮动对父元素及后续元素造成的影响。*/</span></div></pre></td></tr></table></figure>
+<h3 id="3-col的四大家族"><a href="#3-col的四大家族" class="headerlink" title="(3)col的四大家族"></a>(3)col的四大家族</h3><blockquote>
+<p>.col-lg        用于大PC屏幕的列<br>.col-md        用于中等PC屏幕列<br>.col-sm        用于中等平板屏幕列<br>.col-xs        用于中等手机屏幕列<br>一行中默认等分为12列，每个.col必须指定自己的宽度占比<br><code>.col-lg-1/2/3/4.../12</code> , <code>.col-md-1/2/3/4.../12</code> , <code>.col-sm-1/2/3/4.../12</code> , <code>.col-xs-1/2/3/4.../12</code></p>
+<p><code>注意：一个div可以指定多个col-值——响应式列宽</code></p>
+</blockquote>
+<ul>
+<li>Bootstrap中默认把浏览器屏幕根据宽度分为四种：<br>(1)超大PC显示器(width&gt;=1200px)             ——  lg (large)<br>(2)普通PC显示器(1200px&gt;width&gt;=992px)      ——  md (medium)<br>(3)平板显示器(991px&gt;width&gt;=768px)           ——  sm (small)<br>(4)手机显示器(width&lt;768px)                    ——  xs (extra small)</li>
+</ul>
+<img src="/img/bootstrap01/06.png" class="[class names]" title="[500] 200 Nodeweb">
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- Stack the columns on mobile by making one full-width and the other half-width --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"row"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-xs-12 col-md-8"</span>&gt;</span>.col-xs-12 .col-md-8<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-xs-6 col-md-4"</span>&gt;</span>.col-xs-6 .col-md-4<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"row"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-xs-6 col-md-4"</span>&gt;</span>.col-xs-6 .col-md-4<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-xs-6 col-md-4"</span>&gt;</span>.col-xs-6 .col-md-4<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-xs-6 col-md-4"</span>&gt;</span>.col-xs-6 .col-md-4<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- Columns are always 50% wide, on mobile and desktop --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"row"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-xs-6"</span>&gt;</span>.col-xs-6<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-xs-6"</span>&gt;</span>.col-xs-6<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="4-向右的偏移量-offset"><a href="#4-向右的偏移量-offset" class="headerlink" title="(4)向右的偏移量(offset)"></a>(4)向右的偏移量(offset)</h3><blockquote>
+<p>可用于在两col间添加大块的空白，或者让col右错实现居中效果<br>col-lg-offset-1/../12 在LG屏幕下实现列偏移<br>col-md-offset-1/../12 在MD/LG屏幕下实现列偏移<br>col-sm-offset-1/../12 在SM/MD/LG屏幕下实现列偏移<br>col-xs-offset-1/../12 在XS/SM/MD/LG屏幕下实现列偏移</p>
+</blockquote>
+<img src="/img/bootstrap01/07.png" class="[class names]" title="[500] 200 Nodeweb">
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"row"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-md-4"</span>&gt;</span>.col-md-4<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-md-4 col-md-offset-4"</span>&gt;</span>.col-md-4 .col-md-offset-4<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"row"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-md-3 col-md-offset-3"</span>&gt;</span>.col-md-3 .col-md-offset-3<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-md-3 col-md-offset-3"</span>&gt;</span>.col-md-3 .col-md-offset-3<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"row"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-md-6 col-md-offset-3"</span>&gt;</span>.col-md-6 .col-md-offset-3<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="5-指定某种屏幕下隐藏"><a href="#5-指定某种屏幕下隐藏" class="headerlink" title="(5)指定某种屏幕下隐藏"></a>(5)指定某种屏幕下隐藏</h3><blockquote>
+<p>.hidden-lg    只在LG屏幕下有效<br>.hidden-md    只在MD屏幕下有效<br>.hidden-sm    只在SM屏幕下有效<br>.hidden-xs    只在XS屏幕下有效</p>
+</blockquote>
+<h3 id="6-栅格系统的嵌套"><a href="#6-栅格系统的嵌套" class="headerlink" title="(6)栅格系统的嵌套"></a>(6)栅格系统的嵌套</h3><blockquote>
+<p>为了使用内置的栅格系统将内容再次嵌套，可以通过添加一个新的 <code>.row</code> 元素和一系列 <code>.col-sm-*</code> 元素到已经存在的 <code>.col-sm-*</code> 元素内。</p>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container/container-fluid"</span>&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"row"</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-*-*"</span>&gt;</span></div><div class="line">           <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"row"</span>&gt;</span></div><div class="line">	       <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-*-*"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">	   <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">       <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">   <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>本次重要难点在与Bootstrap的栅格系统，它是实现响应式设计的关键所在，而且嵌套的比较复杂。<br>友情链接：<a href="https://github.com/twbs/bootstrap" target="_blank" rel="external">Bootstrap项目主页</a>。</p>
+</blockquote>
+
+                <hr>
+                
+                <!-- 多说 Share start -->
+                <div class="ds-share"
+                     style="text-align: right"
+                     data-thread-key="2016/04/02/Bootstrap学习笔记01/"
+                     data-title="Bootstrap学习笔记01"
+                     data-url="http://blog.isnomo.com/2016/04/02/Bootstrap学习笔记01/"
+                     data-images=""
+                     data-content="
+
+Bootstrap来自 Twitter，是目前很受欢迎的前端框架。Bootstrap 是基... | Nomo&#39;s blog ">
+                    <div class="ds-share-inline">
+                        <ul class="ds-share-icons-16">
+                            <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
+                            <li><a class="ds-weibo flat" href="javascript:void(0);" data-service="weibo">微博</a></li>
+                            <li><a class="ds-wechat flat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+                            <li><a class="ds-qq flat" href="javascript:void(0);" data-service="qq">QQ</a></li>
+                            <li><a class="ds-qzone flat" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+                            <li><a class="ds-douban flat" href="javascript:void(0);" data-service="douban">豆瓣</a></li>
+                        </ul>
+                        <div class="ds-share-icons-more">
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <!-- 多说 Share end-->
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2016/04/06/Bootstrap学习笔记02/" data-toggle="tooltip" data-placement="top"
+                           title="Bootstrap学习笔记02">&larr; 上一篇</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2016/03/17/Adobe2014软件合集/" data-toggle="tooltip" data-placement="top"
+                           title="资源分享：Adobe CC 2014各种软件[合集]">下一篇 &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                         data-thread-key="2016/04/02/Bootstrap学习笔记01/"
+                         data-title="Bootstrap学习笔记01"
+                         data-url="http://blog.isnomo.com/2016/04/02/Bootstrap学习笔记01/">
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#起步"><span class="toc-text">起步</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#下载模板文件"><span class="toc-text">下载模板文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基础模板"><span class="toc-text">基础模板</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#引入Bootlint"><span class="toc-text">引入Bootlint</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基础全局CSS样式"><span class="toc-text">基础全局CSS样式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Bootstrap中的CSS-Reset"><span class="toc-text">Bootstrap中的CSS Reset</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#全局CSS样式——按钮"><span class="toc-text">全局CSS样式——按钮</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#全局CSS样式——图片"><span class="toc-text">全局CSS样式——图片</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#全局CSS样式——文本样式"><span class="toc-text">全局CSS样式——文本样式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#全局CSS样式——列表样式"><span class="toc-text">全局CSS样式——列表样式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#全局CSS样式——表格"><span class="toc-text">全局CSS样式——表格</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#全局CSS样式——栅格布局系统"><span class="toc-text">全局CSS样式——栅格布局系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-栅格系统中的容器"><span class="toc-text">(1)栅格系统中的容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Bootstrap两种容器"><span class="toc-text">(2)Bootstrap两种容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-col的四大家族"><span class="toc-text">(3)col的四大家族</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-向右的偏移量-offset"><span class="toc-text">(4)向右的偏移量(offset)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-指定某种屏幕下隐藏"><span class="toc-text">(5)指定某种屏幕下隐藏</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-栅格系统的嵌套"><span class="toc-text">(6)栅格系统的嵌套</span></a></li></ol></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/Tags/">标签</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#前端技术"
+                           title="前端技术">前端技术</a>
+                        
+                        <a class="tag" href="/tags/#Bootstrap"
+                           title="Bootstrap">Bootstrap</a>
+                        
+                        <a class="tag" href="/tags/#CSS"
+                           title="CSS">CSS</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">友情链接</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="http://hexo.io">HEXO</a></li>
+                        
+                        <li><a href="http://isnomo.com">isNomo</a></li>
+                        
+                        <li><a href="http://moxfive.xyz/">MOxFIVE</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'nomo';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user};
+    (function () {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';
+        ds.async = true;
+//        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.src = '/js/embed_ua.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a target="_blank" href="http://weibo.com/1935873681">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/-nomo">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+
+                    
+
+                    
+                    <li>
+                        <a target="_blank"  href="https://github.com/isnomo">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                    
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/炜皓-项-296585126">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Nomo 2017
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">本站访问量: <span id="busuanzi_value_site_pv"></span> 次</span>丨
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">本文阅读量: <span id="busuanzi_value_page_pv"></span> 次</span>
+                    <br>
+                    <a href="https://hexo.io/">Hexo</a> Theme by <a href="https://blog.isnomo.com/">_Nomo</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<script src="/js/hover3d.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".hover3D").hover3d({
+            selector: ".hover3D_card",
+            perspective: 3000,
+            sensitivity: 35
+        });
+    });
+</script>
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://blog.isnomo.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    var _baId = '68e322350c5e69b5a924978892f21122';
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?" + _baId;
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+<!--&lt;!&ndash; swiftype 站内搜索引擎 &ndash;&gt;-->
+<!--<script type="text/javascript">-->
+  <!--(function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){-->
+  <!--(w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);-->
+  <!--e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);-->
+  <!--})(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');-->
+
+  <!--_st('install','null','2.0.0');-->
+<!--</script>-->
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="/img/new_aman.jpg">
+</body>
+
+</html>

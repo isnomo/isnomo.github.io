@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Nomo Hsiang的博客，关注前段技术。">
+    <meta name="keyword" content="Nomo,isnomo,NOMO,nomo博客,nomo blog,isnomo blog">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="icon" href="/img/icon.png">
+    <link rel="alternate" type="application/atom+xml" title="Nomo" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        PHP简单的登录验证｜Nomo&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://blog.isnomo.com/2017/02/17/PHP简单的注册与登录验证/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('/img/mobile.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    Nomo
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="blog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">首页</a>
+                    </li>
+					
+					
+                    
+                        
+							
+								
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">标签</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/archives/">归档</a>
+                        </li>
+							
+						
+                    
+                        
+							
+								
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/works/">作品集</a>
+                        </li>
+							
+						
+                    
+					
+					
+						<li>
+							<a href="/about">关于我</a>
+						</li>
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#blog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img" src="/img/bg/tjin.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('/img/bg/tjin.jpg');
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>PHP简单的登录验证</h1>
+                    
+                    <h2 class="subheading">使用SESSION验证用户登录状况</h2>
+                    
+                    <span class="meta">
+                         作者 _Nomo
+                        <span>
+                          日期 2017-02-17
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#PHP"
+                           title="PHP">PHP</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            PHP简单的登录验证
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <blockquote>
+<p>做项目时遇到需要验证用户的登录，想想还是使用PHP比较简单快捷，主要使用 <code>SESSION</code> 属性记录，通过与MySQL数据库交互来判断。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="index-html-登录页面"><a href="#index-html-登录页面" class="headerlink" title="index.html 登录页面"></a>index.html 登录页面</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;form <span class="class"><span class="keyword">class</span></span>=<span class="string">"form-signin"</span> method=<span class="string">"post"</span> action=<span class="string">"&lt;?php $_PHP_SELF ?&gt;"</span>&gt;</div><div class="line">       &lt;input <span class="class"><span class="keyword">type</span></span>=<span class="string">"text"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"form-control"</span> name=<span class="string">"name"</span> id=<span class="string">"name"</span> placeholder=<span class="string">"用户名"</span> autofocus&gt;</div><div class="line">       &lt;input <span class="class"><span class="keyword">type</span></span>=<span class="string">"password"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"form-control"</span> name=<span class="string">"pwd"</span> id=<span class="string">"pwd"</span> placeholder=<span class="string">"密码"</span>&gt;</div><div class="line"></div><div class="line">       &lt;button <span class="class"><span class="keyword">class</span></span>=<span class="string">"btn btn-lg btn-login btn-block"</span> id=<span class="string">"login"</span> name=<span class="string">"login"</span> <span class="class"><span class="keyword">type</span></span>=<span class="string">"submit"</span>&gt;</div><div class="line">          &lt;i <span class="class"><span class="keyword">class</span></span>=<span class="string">"fa fa-check"</span>&gt;&lt;/i&gt;</div><div class="line">       &lt;/button&gt;</div><div class="line">&lt;/form&gt;</div></pre></td></tr></table></figure>
+<h2 id="PHP-处理代码"><a href="#PHP-处理代码" class="headerlink" title="PHP 处理代码"></a>PHP 处理代码</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line"><span class="php"><span class="meta">&lt;?php</span></span></div><div class="line">session_start();        <span class="comment">//启用 session 记录</span></div><div class="line">header(<span class="string">'conten-type:text/html;charset=utf-8'</span>);          <span class="comment">//UTF-8的请求头</span></div><div class="line"></div><div class="line"><span class="comment">//注销登录的操作</span></div><div class="line"><span class="keyword">if</span>($_GET[<span class="string">'action'</span>] == <span class="string">"logout"</span>)&#123;</div><div class="line">    <span class="keyword">unset</span>($_SESSION[<span class="string">'admin_name'</span>]);</div><div class="line">	<span class="keyword">echo</span> <span class="string">"&lt;meta http-equiv='Content-Type' content='text/html; charset=utf-8' /&gt;"</span>;</div><div class="line">    <span class="keyword">echo</span> <span class="string">"&lt;script type='text/javascript'&gt;alert('注销成功!');&lt;/script&gt;"</span>;</div><div class="line">	<span class="keyword">echo</span> <span class="string">"&lt;script type='text/javascript'&gt;window.location.href='index.php'&lt;/script&gt;"</span>;</div><div class="line">    <span class="keyword">exit</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//判断有登陆表的内容</span></div><div class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>($_POST[<span class="string">'login'</span>])) &#123;</div><div class="line"></div><div class="line"><span class="comment">//连接数据库的部分代码</span></div><div class="line">$dbhost = <span class="string">''</span>;       <span class="comment">//mysql服务器主机地址</span></div><div class="line">$dbuser = <span class="string">''</span>;       <span class="comment">//mysql用户名</span></div><div class="line">$dbpass = <span class="string">''</span>;       <span class="comment">//mysql用户名密码</span></div><div class="line">$conn = mysql_connect($dbhost, $dbuser, $dbpass);</div><div class="line"><span class="keyword">if</span>(! $conn )</div><div class="line">&#123;</div><div class="line">  <span class="keyword">die</span>(<span class="string">'连接失败: '</span> . mysql_error());</div><div class="line">&#125;</div><div class="line"></div><div class="line">mysql_query(<span class="string">"set names utf8"</span>);          <span class="comment">//格式化UTF-8的内容</span></div><div class="line"></div><div class="line">mysql_select_db( <span class="string">'table-db'</span>,$conn);      <span class="comment">//连接数据库</span></div><div class="line"></div><div class="line">$admin_name = $_POST[<span class="string">'name'</span>];       <span class="comment">//提取页面中的账号和密码</span></div><div class="line">$admin_pwd = $_POST[<span class="string">'pwd'</span>];</div><div class="line"></div><div class="line"><span class="keyword">if</span>(preg_match(<span class="string">'/^[a-zA-Z][a-zA-Z0-9]&#123;4,12&#125;$/'</span>,$admin_name))&#123;        <span class="comment">//正则表达式 验证用户名格式，防止SQL注入</span></div><div class="line">	$check_query = mysql_query(<span class="string">"select * from web_admin where admin_name='$admin_name' and admin_pwd='$admin_pwd'</span></div><div class="line">	limit 1");</div><div class="line">	<span class="keyword">if</span>($result = mysql_fetch_array($check_query))&#123;</div><div class="line">		<span class="comment">//登录成功</span></div><div class="line">		$_SESSION[<span class="string">'admin_name'</span>] = $admin_name;                      <span class="comment">//记录用户名的值</span></div><div class="line">		<span class="keyword">echo</span> <span class="string">"&lt;script type='text/javascript'&gt;alert('登陆成功!');&lt;/script&gt;"</span>;</div><div class="line">		<span class="keyword">echo</span> <span class="string">"&lt;script type='text/javascript'&gt;window.location.href='main.php'&lt;/script&gt;"</span>;</div><div class="line">	&#125; <span class="keyword">else</span> &#123;</div><div class="line">		<span class="keyword">echo</span> <span class="string">"&lt;script type='text/javascript'&gt;alert('登陆失败，请重试!');&lt;/script&gt;"</span>;</div><div class="line">	&#125;</div><div class="line">&#125;<span class="keyword">else</span>&#123;</div><div class="line">	<span class="keyword">echo</span> <span class="string">"&lt;script type='text/javascript'&gt;alert('请输入合法用户名!');&lt;/script&gt;"</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="其他页面验证session"><a href="#其他页面验证session" class="headerlink" title="其他页面验证session"></a>其他页面验证session</h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">session_start();</div><div class="line">header(<span class="string">'conten-type:text/html;charset=utf-8'</span>);</div><div class="line"></div><div class="line"><span class="regexp">//</span>检测是否登录，若没登录则转向登录界面</div><div class="line"><span class="keyword">if</span>(!isset(<span class="variable">$_SESSION</span>[<span class="string">'admin_name'</span>]))&#123;</div><div class="line">	echo <span class="string">"&lt;meta http-equiv='Content-Type' content='text/html; charset=utf-8' /&gt;"</span>;</div><div class="line">	echo <span class="string">"&lt;script type='text/javascript'&gt;alert('您还未登录，请登陆后操作!');&lt;/script&gt;"</span>;</div><div class="line">    echo <span class="string">"&lt;script type='text/javascript'&gt;window.location.href='index.php'&lt;/script&gt;"</span>;</div><div class="line">    <span class="keyword">exit</span>();</div><div class="line">&#125;</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>只是简单的小例子，注册的话只需要把SQL语句中的验证换成写入就好了！欢迎留言。</p>
+</blockquote>
+
+                <hr>
+                
+                <!-- 多说 Share start -->
+                <div class="ds-share"
+                     style="text-align: right"
+                     data-thread-key="2017/02/17/PHP简单的注册与登录验证/"
+                     data-title="PHP简单的登录验证"
+                     data-url="http://blog.isnomo.com/2017/02/17/PHP简单的注册与登录验证/"
+                     data-images="http://blog.isnomo.com/2017/02/17/PHP简单的注册与登录验证//img/bg/tjin.jpg"
+                     data-content="
+做项目时遇到需要验证用户的登录，想想还是使用PHP比较简单快捷，主要使用 SESSION 属... | Nomo&#39;s blog ">
+                    <div class="ds-share-inline">
+                        <ul class="ds-share-icons-16">
+                            <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
+                            <li><a class="ds-weibo flat" href="javascript:void(0);" data-service="weibo">微博</a></li>
+                            <li><a class="ds-wechat flat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+                            <li><a class="ds-qq flat" href="javascript:void(0);" data-service="qq">QQ</a></li>
+                            <li><a class="ds-qzone flat" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+                            <li><a class="ds-douban flat" href="javascript:void(0);" data-service="douban">豆瓣</a></li>
+                        </ul>
+                        <div class="ds-share-icons-more">
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <!-- 多说 Share end-->
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2017/02/20/原生JS实现图片预览/" data-toggle="tooltip" data-placement="top"
+                           title="原生JS实现图片预览">&larr; 上一篇</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2016/12/06/多说评论区显示UA标示/" data-toggle="tooltip" data-placement="top"
+                           title="多说评论区显示UA与博主标示">下一篇 &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                         data-thread-key="2017/02/17/PHP简单的注册与登录验证/"
+                         data-title="PHP简单的登录验证"
+                         data-url="http://blog.isnomo.com/2017/02/17/PHP简单的注册与登录验证/">
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#index-html-登录页面"><span class="toc-text">index.html 登录页面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PHP-处理代码"><span class="toc-text">PHP 处理代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他页面验证session"><span class="toc-text">其他页面验证session</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/Tags/">标签</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#PHP"
+                           title="PHP">PHP</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">友情链接</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="http://hexo.io">HEXO</a></li>
+                        
+                        <li><a href="http://isnomo.com">isNomo</a></li>
+                        
+                        <li><a href="http://moxfive.xyz/">MOxFIVE</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'nomo';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user};
+    (function () {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';
+        ds.async = true;
+//        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.src = '/js/embed_ua.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a target="_blank" href="http://weibo.com/1935873681">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/-nomo">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+
+                    
+
+                    
+                    <li>
+                        <a target="_blank"  href="https://github.com/isnomo">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                    
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/炜皓-项-296585126">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Nomo 2017
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">本站访问量: <span id="busuanzi_value_site_pv"></span> 次</span>丨
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">本文阅读量: <span id="busuanzi_value_page_pv"></span> 次</span>
+                    <br>
+                    <a href="https://hexo.io/">Hexo</a> Theme by <a href="https://blog.isnomo.com/">_Nomo</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<script src="/js/hover3d.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".hover3D").hover3d({
+            selector: ".hover3D_card",
+            perspective: 3000,
+            sensitivity: 35
+        });
+    });
+</script>
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://blog.isnomo.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    var _baId = '68e322350c5e69b5a924978892f21122';
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?" + _baId;
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+<!--&lt;!&ndash; swiftype 站内搜索引擎 &ndash;&gt;-->
+<!--<script type="text/javascript">-->
+  <!--(function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){-->
+  <!--(w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);-->
+  <!--e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);-->
+  <!--})(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');-->
+
+  <!--_st('install','null','2.0.0');-->
+<!--</script>-->
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="/img/new_aman.jpg">
+</body>
+
+</html>
