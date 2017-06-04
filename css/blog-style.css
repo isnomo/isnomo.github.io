@@ -6,9 +6,9 @@
 }
 
 
-hr{
+/*hr{
     margin:0;
-}
+}*/
 
 .sidebar-container {
     color: #bfbfbf;
@@ -899,7 +899,7 @@ img::-moz-selection {
     max-width: 100%;
     height: auto;
     margin: 1.5em auto 1.6em auto;
-    box-shadow: 0 0 30px rgba(100,100,100,.4);
+        box-shadow: 0 0 40px rgba(100,100,100,.3);
 }
 
 /* Hux Optimize UserExperience */

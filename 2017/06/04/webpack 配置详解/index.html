@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Nomo Hsiang的博客，关注前段技术。">
+    <meta name="keyword" content="Nomo,isnomo,NOMO,nomo博客,nomo blog,isnomo blog">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="icon" href="/img/icon.png">
+    <link rel="alternate" type="application/atom+xml" title="Nomo" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        webpack 配置详解｜Nomo&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://blog.isnomo.com/2017/06/04/webpack 配置详解/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('/img/mobile.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    Nomo
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="blog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">首页</a>
+                    </li>
+					
+					
+                    
+                        
+							
+								
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/archives/">归档</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">标签</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/works/">作品集</a>
+                        </li>
+							
+						
+                    
+                        
+							
+								
+							
+						
+                    
+					
+					
+						<li>
+							<a href="/about">关于我</a>
+						</li>
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#blog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img" src="/img/blog_header1.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('/img/blog_header1.jpg');
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>webpack 配置详解</h1>
+                    
+                    <h2 class="subheading">初学 webpack 的一些基础配置信息</h2>
+                    
+                    <span class="meta">
+                         作者 _Nomo
+                        <span>
+                          日期 2017-06-04
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#webpack"
+                           title="webpack">webpack</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            webpack 配置详解
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <blockquote>
+<p>WebPack可以看做是模块打包机：把你的项目当做一个整体，通过一个给定的主文件（如：index.js），从这个文件开始分析你的项目结构，找到项目的所有依赖文件，使用loaders处理它们，最后打包为一个浏览器可识别的JavaScript文件。本文仅限于个人学习所用，原文转载自 <a href="http://www.jianshu.com/p/2d9ed1fe3e8c" target="_blank" rel="external">慢清尘</a> ,根据个人学习与整理略有删减。</p>
+</blockquote>
+<ul>
+<li>webpack 官方文档地址：<a href="https://doc.webpack-china.org/" target="_blank" rel="external">中文文档</a></li>
+</ul>
+<p><img src="/img/webpack/webpack.png" alt="webpack" title="webpack"></p>
+<h2 id="1、配置webpack"><a href="#1、配置webpack" class="headerlink" title="1、配置webpack"></a>1、配置webpack</h2><h3 id="1-1-新建一个项目文件夹，并且安装webpack"><a href="#1-1-新建一个项目文件夹，并且安装webpack" class="headerlink" title="1.1 新建一个项目文件夹，并且安装webpack"></a>1.1 新建一个项目文件夹，并且安装webpack</h3><figure class="highlight maxima"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">mkdir</span> webpack-<span class="built_in">demo</span> &amp;&amp; cd webpack-<span class="built_in">demo</span></div><div class="line">npm init -y</div><div class="line">npm install --<span class="built_in">save</span>-dev webpack</div></pre></td></tr></table></figure>
+<h3 id="1-2-新建html以及js文件如下"><a href="#1-2-新建html以及js文件如下" class="headerlink" title="1.2 新建html以及js文件如下"></a>1.2 新建html以及js文件如下</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span>webpack<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"g-index"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"></div><div class="line">        <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"dist/bundle.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;!-- common.js --&gt;</div><div class="line">exports.printmsg = <span class="function"><span class="keyword">function</span>(<span class="params">msg</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(msg);</div><div class="line">&#125;</div><div class="line"></div><div class="line">&lt;!-- index.js --&gt;</div><div class="line"><span class="keyword">var</span> lib = <span class="built_in">require</span>(<span class="string">'./common.js'</span>)</div><div class="line">lib.printmsg(<span class="string">'good'</span>)</div></pre></td></tr></table></figure>
+<h3 id="1-3-编译webpack"><a href="#1-3-编译webpack" class="headerlink" title="1.3 编译webpack"></a>1.3 编译webpack</h3><figure class="highlight maxima"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">webpack src/js/index.js dist/bundle.js</div></pre></td></tr></table></figure>
+<p>打包结果如下：<br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">$ webpack src/js/index.js dist/bundle.js</div><div class="line">Hash: 39e1d99d27c58dd34eb1</div><div class="line">Version: webpack <span class="number">2.5</span>.1</div><div class="line">Time: 81ms</div><div class="line">    Asset     Size  Chunks             Chunk Names</div><div class="line">bundle.js  <span class="number">2.82</span> kB       <span class="number">0</span>  [emitted]  main</div><div class="line">   [<span class="number">0</span>] ./src/js/common.js <span class="number">58</span> bytes &#123;<span class="number">0</span>&#125; [built]</div><div class="line">   [<span class="number">1</span>] ./src/js/index.js <span class="number">50</span> bytes &#123;<span class="number">0</span>&#125; [built]</div></pre></td></tr></table></figure></p>
+<p>项目结构列表：<br><img src="/img/webpack/xmjg.png" alt="项目结构" title="项目结构"></p>
+<hr>
+<h2 id="2、编写配置文件"><a href="#2、编写配置文件" class="headerlink" title="2、编写配置文件"></a>2、编写配置文件</h2><blockquote>
+<p>Webpack拥有很多高级的功能，这些功能其实都可以通过命令行模式实现，但是正如已经提到的，这样不太方便且容易出错的，一个更好的办法是定义一个配置文件，这个配置文件其实也是一个简单的JavaScript模块，可以把所有的与构建相关的信息放在里面。</p>
+</blockquote>
+<h3 id="2-1-在根目录下面新建-webpack-config-js"><a href="#2-1-在根目录下面新建-webpack-config-js" class="headerlink" title="2.1 在根目录下面新建 webpack.config.js"></a>2.1 在根目录下面新建 webpack.config.js</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  <span class="attr">entry</span>: <span class="string">'./src/js/index.js'</span>,</div><div class="line">  <span class="attr">output</span>: &#123;</div><div class="line">    <span class="attr">filename</span>: <span class="string">'bundle.js'</span>,</div><div class="line">    <span class="attr">path</span>: path.resolve(__dirname, <span class="string">'dist'</span>)</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h3 id="2-2-修改-package-json，添加条目如下"><a href="#2-2-修改-package-json，添加条目如下" class="headerlink" title="2.2 修改 package.json，添加条目如下:"></a>2.2 修改 package.json，添加条目如下:</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  ...</div><div class="line">  <span class="string">"scripts"</span>: &#123;</div><div class="line">    <span class="string">"build"</span>: <span class="string">"webpack"</span>,</div><div class="line">  &#125;,</div><div class="line">  ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="2-3-使用命令行编译项目"><a href="#2-3-使用命令行编译项目" class="headerlink" title="2.3 使用命令行编译项目"></a>2.3 使用命令行编译项目</h3><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm <span class="keyword">run</span><span class="bash"> build</span></div></pre></td></tr></table></figure>
+<hr>
+<h2 id="3、调试webpack"><a href="#3、调试webpack" class="headerlink" title="3、调试webpack"></a>3、调试webpack</h2><p>开发总是离不开调试，如果可以更加方便的调试当然就能提高开发效率，不过打包后的文件有时候你是不容易找到出错了的地方对应的源代码的位置的，Source Maps就是来帮我们解决这个问题的。通过简单的配置后，Webpack在打包时可以为我们生成的source maps，这为我们提供了一种对应编译文件和源文件的方法，使得编译后的代码可读性更高，也更容易调试。</p>
+<table>
+<thead>
+<tr>
+<th>devtool选项</th>
+<th>配置结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>source-map</td>
+<td>在一个单独的文件中产生一个完整且功能完全的文件。这个文件具有最好的source map，但是它会减慢打包文件的构建速度；</td>
+</tr>
+<tr>
+<td>cheap-module-source-map</td>
+<td>在一个单独的文件中生成一个不带列映射的map，不带列映射提高项目构建速度，但是也使得浏览器开发者工具只能对应到具体的行，不能对应到具体的列（符号），会对调试造成不便；</td>
+</tr>
+<tr>
+<td>eval-source-map</td>
+<td>使用eval打包源文件模块，在同一个文件中生成干净的完整的source map。这个选项可以在不影响构建速度的前提下生成完整的sourcemap，但是对打包后输出的JS文件的执行具有性能和安全的隐患。不过在开发阶段这是一个非常好的选项，但是在生产阶段一定不要用这个选项；</td>
+</tr>
+<tr>
+<td>cheap-module-eval-source-map</td>
+<td>这是在打包文件时最快的生成source map的方法，生成的Source Map 会和打包后的JavaScript文件同行显示，没有列映射，和eval-source-map选项具有相似的缺点；</td>
+</tr>
+</tbody>
+</table>
+<p>在学习阶段以及在小到中性的项目上，eval-source-map 是一个很好的选项，不过记得只在开发阶段使用它，继续上面的例子，进行如下配置:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  <span class="attr">entry</span>: <span class="string">'./src/js/index.js'</span>,</div><div class="line">  <span class="attr">output</span>: &#123;</div><div class="line">    <span class="attr">filename</span>: <span class="string">'bundle.js'</span>,</div><div class="line">    <span class="attr">path</span>: path.resolve(__dirname, <span class="string">'dist'</span>)</div><div class="line">  &#125;,</div><div class="line">  <span class="attr">devtool</span>: <span class="string">'eval-source-map'</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<hr>
+<h2 id="4、建立本地开发服务器"><a href="#4、建立本地开发服务器" class="headerlink" title="4、建立本地开发服务器"></a>4、建立本地开发服务器</h2><p>Webpack提供一个可选的本地开发服务器，这个本地服务器基于node.js构建，可以实现代码的热加载功能，可以通过它方便的进行代码的开发。其构建方法如下：</p>
+<h3 id="4-1-安装-webpack-dev-server"><a href="#4-1-安装-webpack-dev-server" class="headerlink" title="4.1 安装 webpack-dev-server"></a>4.1 安装 <code>webpack-dev-server</code></h3><figure class="highlight maxima"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install --<span class="built_in">save</span>-dev webpack-dev-server</div></pre></td></tr></table></figure>
+<h3 id="4-2-修改配置文件-webpack-config-js"><a href="#4-2-修改配置文件-webpack-config-js" class="headerlink" title="4.2 修改配置文件 webpack.config.js"></a>4.2 修改配置文件 <code>webpack.config.js</code></h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">    <span class="attr">entry</span>: <span class="string">'./src/js/index.js'</span>,</div><div class="line">    <span class="attr">output</span>: &#123;</div><div class="line">        <span class="attr">filename</span>: <span class="string">'bundle.js'</span>,</div><div class="line">        <span class="attr">path</span>: path.resolve(__dirname, <span class="string">'dist'</span>)</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">devServer</span>: &#123;</div><div class="line">        <span class="attr">contentBase</span>: <span class="string">"./"</span>,</div><div class="line">        <span class="attr">port</span>: <span class="number">9000</span>,</div><div class="line">        <span class="attr">inline</span>: <span class="literal">true</span></div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h3 id="4-3-修改-package-json-，添加条目如下"><a href="#4-3-修改-package-json-，添加条目如下" class="headerlink" title="4.3 修改 package.json ，添加条目如下:"></a>4.3 修改 <code>package.json</code> ，添加条目如下:</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  ...</div><div class="line">  <span class="string">"scripts"</span>: &#123;</div><div class="line">    <span class="string">"dev"</span>: <span class="string">"webpack-dev-server"</span>,</div><div class="line">  &#125;,</div><div class="line">  ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="4-4-输入-npm-run-dev-启动-webpack-dev-server"><a href="#4-4-输入-npm-run-dev-启动-webpack-dev-server" class="headerlink" title="4.4 输入 npm run dev 启动 webpack-dev-server"></a>4.4 输入 <code>npm run dev</code> 启动 <code>webpack-dev-server</code></h3><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">$ npm run dev                                                                            </div><div class="line"></div><div class="line">&gt; webpackproj@1.0.0 dev F:\Project\DEMO\webpackdemo                                      </div><div class="line">&gt; webpack-dev-server                                                                     </div><div class="line"></div><div class="line">Project is running at http://localhost:9000/                                             </div><div class="line">webpack output is served from /                                                          </div><div class="line">Content not from webpack is served from ./                                               </div><div class="line">Hash: 1aca755d21fcb2c76314                                                               </div><div class="line">Version: webpack 2.5.1                                                                   </div><div class="line">Time: 918ms                                                                              </div><div class="line">        Asset    Size  Chunks                    Chunk Names                             </div><div class="line">    bundle.js  316 kB       0  [emitted]  [big]  main                                    </div><div class="line">bundle.js.map  375 kB       0  [emitted]         main                                    </div><div class="line">chunk    &#123;0&#125; bundle.js, bundle.js.map (main) 302 kB [entry] [rendered]                   </div><div class="line">   [35] (webpack)-dev-server/client?http://localhost:9000 5.68 kB &#123;0&#125; [built]            </div><div class="line">   [36] ./src/js/index.js 69 bytes &#123;0&#125; [built]                                           </div><div class="line">   [37] ./~/ansi-html/index.js 4.26 kB &#123;0&#125; [built]                                       </div><div class="line">   [38] ./~/ansi-regex/index.js 135 bytes &#123;0&#125; [built]                                    </div><div class="line">   [40] ./~/events/events.js 8.33 kB &#123;0&#125; [built]                                         </div><div class="line">   [41] ./~/html-entities/index.js 231 bytes &#123;0&#125; [built]                                 </div><div class="line">   [48] ./~/querystring-es3/index.js 127 bytes &#123;0&#125; [built]                               </div><div class="line">   [76] ./~/strip-ansi/index.js 161 bytes &#123;0&#125; [built]                                    </div><div class="line">   [78] ./~/url/url.js 23.3 kB &#123;0&#125; [built]                                               </div><div class="line">   [79] ./~/url/util.js 314 bytes &#123;0&#125; [built]                                            </div><div class="line">   [80] (webpack)-dev-server/client/overlay.js 3.73 kB &#123;0&#125; [built]                       </div><div class="line">   [81] (webpack)-dev-server/client/socket.js 897 bytes &#123;0&#125; [built]                      </div><div class="line">   [83] (webpack)/hot/emitter.js 77 bytes &#123;0&#125; [built]                                    </div><div class="line">   [84] ./src/js/common.js 58 bytes &#123;0&#125; [built]                                          </div><div class="line">   [85] multi (webpack)-dev-server/client?http://localhost:9000 ./src/js/index.js 40 byte</div><div class="line">s &#123;0&#125; [built]                                                                            </div><div class="line">     + 71 hidden modules                                                                 </div><div class="line">webpack: Compiled successfully.</div></pre></td></tr></table></figure>
+<hr>
+<h2 id="5、配置HTML代码热加载"><a href="#5、配置HTML代码热加载" class="headerlink" title="5、配置HTML代码热加载"></a>5、配置HTML代码热加载</h2><blockquote>
+<p><code>webpack-dev-server</code> 只能监控入口文件（JS/LESS/CSS/IMG）的变化，因此 HTML文件的变化必须依赖插件来进行监控。</p>
+</blockquote>
+<h3 id="5-1-安装-html-webpack-plugin"><a href="#5-1-安装-html-webpack-plugin" class="headerlink" title="5.1 安装 html-webpack-plugin"></a>5.1 安装 <code>html-webpack-plugin</code></h3><figure class="highlight maxima"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install html-webpack-plugin --<span class="built_in">save</span>-dev</div></pre></td></tr></table></figure>
+<h3 id="5-2-修改配置文件-webpack-config-js-把-index-html-加入监控"><a href="#5-2-修改配置文件-webpack-config-js-把-index-html-加入监控" class="headerlink" title="5.2 修改配置文件 webpack.config.js , 把  index.html 加入监控"></a>5.2 修改配置文件 <code>webpack.config.js</code> , 把  <code>index.html</code> 加入监控</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"><span class="keyword">var</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>)</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">    <span class="attr">entry</span>: <span class="string">'./src/js/index.js'</span>,</div><div class="line">    <span class="attr">output</span>: &#123;</div><div class="line">        <span class="attr">filename</span>: <span class="string">'bundle.js'</span>,</div><div class="line">        <span class="attr">path</span>: path.resolve(__dirname, <span class="string">'dist'</span>)</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">plugins</span>: [</div><div class="line">        <span class="keyword">new</span> HtmlWebpackPlugin(&#123;   <span class="comment">// html代码热加载</span></div><div class="line">            template: <span class="string">'./index.html'</span></div><div class="line">        &#125;),</div><div class="line">    ],</div><div class="line">    <span class="attr">devServer</span>: &#123;</div><div class="line">        <span class="attr">contentBase</span>: <span class="string">"./"</span>,</div><div class="line">        <span class="attr">port</span>: <span class="number">9000</span>,</div><div class="line">        <span class="attr">inline</span>: <span class="literal">true</span></div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>此时可以取消 html 文件内的 js 引用，因为 <code>html-webpack-plugin</code> 会自动加载编译完的 js 文件。</p>
+</blockquote>
+<hr>
+<h2 id="6、配置自动打开浏览器"><a href="#6、配置自动打开浏览器" class="headerlink" title="6、配置自动打开浏览器"></a>6、配置自动打开浏览器</h2><p>通过配置 <code>open-browser-webpack-plugin</code> 可以在webpack编译完之后自动打开浏览器；</p>
+<h3 id="6-1-安装-open-browser-webpack-plugin"><a href="#6-1-安装-open-browser-webpack-plugin" class="headerlink" title="6.1 安装 open-browser-webpack-plugin"></a>6.1 安装 <code>open-browser-webpack-plugin</code></h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm <span class="keyword">install</span> <span class="keyword">open</span>-browser-webpack-<span class="keyword">plugin</span> <span class="comment">--save-dev</span></div></pre></td></tr></table></figure>
+<h3 id="6-2-修改配置文件-webpack-config-js"><a href="#6-2-修改配置文件-webpack-config-js" class="headerlink" title="6.2 修改配置文件 webpack.config.js"></a>6.2 修改配置文件 <code>webpack.config.js</code></h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"><span class="keyword">var</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>)</div><div class="line"><span class="keyword">var</span> OpenBrowserPlugin = <span class="built_in">require</span>(<span class="string">'open-browser-webpack-plugin'</span>);</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">    <span class="attr">entry</span>: <span class="string">'./src/js/index.js'</span>,</div><div class="line">    <span class="attr">output</span>: &#123;</div><div class="line">        <span class="attr">filename</span>: <span class="string">'bundle.js'</span>,</div><div class="line">        <span class="attr">path</span>: path.resolve(__dirname, <span class="string">'dist'</span>)</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">plugins</span>: [</div><div class="line">        <span class="keyword">new</span> HtmlWebpackPlugin(&#123; <span class="comment">// html代码热加载</span></div><div class="line">            template: <span class="string">'./index.html'</span></div><div class="line">        &#125;),</div><div class="line">        <span class="keyword">new</span> OpenBrowserPlugin(&#123; <span class="comment">//自动打开浏览器</span></div><div class="line">            url: <span class="string">'http://localhost:9000'</span></div><div class="line">        &#125;)</div><div class="line">    ],</div><div class="line">    <span class="attr">devServer</span>: &#123;</div><div class="line">        <span class="attr">contentBase</span>: <span class="string">"./"</span>,</div><div class="line">        <span class="attr">port</span>: <span class="number">9000</span>,</div><div class="line">        <span class="attr">inline</span>: <span class="literal">true</span></div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<hr>
+<h2 id="7、配置-json-加载器"><a href="#7、配置-json-加载器" class="headerlink" title="7、配置 json 加载器"></a>7、配置 json 加载器</h2><p>使用 json 解析器可以将常量数据定义在 json文件中，然后在 js 文件中调用。</p>
+<h3 id="7-1-在项目根目录下面创建-config-json-文件，内容如下"><a href="#7-1-在项目根目录下面创建-config-json-文件，内容如下" class="headerlink" title="7.1 在项目根目录下面创建 config.json 文件，内容如下:"></a>7.1 在项目根目录下面创建 config.json 文件，内容如下:</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"name"</span>: <span class="string">"demo"</span>,</div><div class="line">    <span class="attr">"type"</span>: <span class="string">"HTML5"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="7-2-修改-index-js"><a href="#7-2-修改-index-js" class="headerlink" title="7.2 修改 index.js"></a>7.2 修改 index.js</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> config = <span class="built_in">require</span>(<span class="string">'../../config.json'</span>)</div><div class="line"><span class="keyword">var</span> lib = <span class="built_in">require</span>(<span class="string">'./common.js'</span>)</div><div class="line">lib.printmsg(config.name)</div></pre></td></tr></table></figure>
+<h3 id="7-3-修改配置文件-webpack-config-js"><a href="#7-3-修改配置文件-webpack-config-js" class="headerlink" title="7.3 修改配置文件 webpack.config.js"></a>7.3 修改配置文件 <code>webpack.config.js</code></h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">    <span class="attr">entry</span>: <span class="string">'./src/js/index.js'</span>,</div><div class="line">    <span class="attr">output</span>: &#123;</div><div class="line">        <span class="attr">filename</span>: <span class="string">'bundle.js'</span>,</div><div class="line">        <span class="attr">path</span>: path.resolve(__dirname, <span class="string">'dist'</span>)</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">module</span>: &#123; </div><div class="line">        <span class="attr">rules</span>: [&#123;</div><div class="line">            <span class="attr">test</span>: <span class="regexp">/\.json$/</span>,</div><div class="line">            <span class="attr">loader</span>: <span class="string">"json-loader"</span></div><div class="line">        &#125;]</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>项目结构如下：<br><img src="/img/webpack/xmjg2.png" alt="项目结构" title="项目结构"></p>
+<hr>
+<h2 id="8、配置-LESS-编译"><a href="#8、配置-LESS-编译" class="headerlink" title="8、配置 LESS 编译"></a>8、配置 LESS 编译</h2><h3 id="8-1-安装-less-style-loader-css-loader-less-loader"><a href="#8-1-安装-less-style-loader-css-loader-less-loader" class="headerlink" title="8.1 安装 less style-loader css-loader less-loader"></a>8.1 安装 <code>less style-loader css-loader less-loader</code></h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm <span class="keyword">install</span> <span class="keyword">less</span> <span class="keyword">style</span>-loader css-loader <span class="keyword">less</span>-loader <span class="comment">--save-dev</span></div></pre></td></tr></table></figure>
+<h3 id="8-2-在项目的css目录下面创建-index-less-文件，内容如下"><a href="#8-2-在项目的css目录下面创建-index-less-文件，内容如下" class="headerlink" title="8.2 在项目的css目录下面创建 index.less 文件，内容如下:"></a>8.2 在项目的css目录下面创建 index.less 文件，内容如下:</h3><figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">@charset</span> <span class="string">"utf-8"</span>;</div><div class="line"><span class="variable">@gray-base:</span>  <span class="number">#000</span>;</div><div class="line"><span class="variable">@gray-light:</span>  lighten(<span class="variable">@gray-base</span>, <span class="number">46.7%</span>); </div><div class="line"></div><div class="line"><span class="selector-class">.g-index</span> &#123;</div><div class="line">    <span class="attribute">height</span>: <span class="number">100vh</span>;</div><div class="line">    <span class="attribute">background</span>: <span class="variable">@gray-light</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="8-3-修改-index-js"><a href="#8-3-修改-index-js" class="headerlink" title="8.3 修改 index.js"></a>8.3 修改 index.js</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">require</span>(<span class="string">'../css/index.less'</span>)</div><div class="line"></div><div class="line"><span class="keyword">var</span> lib = <span class="built_in">require</span>(<span class="string">'./common.js'</span>)</div><div class="line">lib.printmsg(<span class="string">'good'</span>)</div></pre></td></tr></table></figure>
+<h3 id="8-4-修改配置文件-webpack-config-js"><a href="#8-4-修改配置文件-webpack-config-js" class="headerlink" title="8.4 修改配置文件 webpack.config.js"></a>8.4 修改配置文件 webpack.config.js</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">    <span class="attr">devtool</span>: <span class="string">'source-map'</span>,</div><div class="line">    <span class="attr">entry</span>: <span class="string">'./src/js/index.js'</span>,</div><div class="line">    <span class="attr">output</span>: &#123;</div><div class="line">        <span class="attr">filename</span>: <span class="string">'bundle.js'</span>,</div><div class="line">        <span class="attr">path</span>: path.resolve(__dirname, <span class="string">'dist'</span>)</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">module</span>: &#123; </div><div class="line">        <span class="attr">rules</span>: [</div><div class="line">        &#123;</div><div class="line">            <span class="attr">test</span>: <span class="regexp">/\.less$/</span>, <span class="comment">// less解析器</span></div><div class="line">            loader: <span class="string">'style-loader!css-loader!less-loader'</span></div><div class="line">        &#125;,]</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>项目结构如下：<br><img src="/img/webpack/xmjg3.png" alt="项目结构" title="项目结构"></p>
+<hr>
+<h2 id="9、配置-Babel-编译"><a href="#9、配置-Babel-编译" class="headerlink" title="9、配置 Babel 编译"></a>9、配置 Babel 编译</h2><h3 id="9-1-安装-babel-core-babel-loader-babel-preset-es2015"><a href="#9-1-安装-babel-core-babel-loader-babel-preset-es2015" class="headerlink" title="9.1 安装 babel-core babel-loader babel-preset-es2015"></a>9.1 安装 <code>babel-core babel-loader babel-preset-es2015</code></h3><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm <span class="keyword">install </span><span class="keyword">babel-core </span><span class="keyword">babel-loader </span><span class="keyword">babel-preset-es2015 </span>--save-dev</div></pre></td></tr></table></figure>
+<h3 id="9-2-修改-common-js-为-ES6-格式"><a href="#9-2-修改-common-js-为-ES6-格式" class="headerlink" title="9.2 修改 common.js 为 ES6 格式"></a>9.2 修改 <code>common.js</code> 为 <code>ES6</code> 格式</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">exports.printmsg = <span class="function">(<span class="params">msg</span>) =&gt;</span> &#123;</div><div class="line">    <span class="built_in">console</span>.log(msg);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="9-3-修改配置文件-webpack-config-js"><a href="#9-3-修改配置文件-webpack-config-js" class="headerlink" title="9.3 修改配置文件 webpack.config.js"></a>9.3 修改配置文件 <code>webpack.config.js</code></h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">    <span class="attr">devtool</span>: <span class="string">'source-map'</span>,</div><div class="line">    <span class="attr">entry</span>: <span class="string">'./src/js/index.js'</span>,</div><div class="line">    <span class="attr">output</span>: &#123;</div><div class="line">        <span class="attr">filename</span>: <span class="string">'bundle.js'</span>,</div><div class="line">        <span class="attr">path</span>: path.resolve(__dirname, <span class="string">'dist'</span>)</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">module</span>: &#123; </div><div class="line">        <span class="attr">rules</span>: [&#123;</div><div class="line">            <span class="attr">test</span>: <span class="regexp">/\.js$/</span>,   <span class="comment">//babel解析器</span></div><div class="line">            exclude: <span class="regexp">/node_modules/</span>,</div><div class="line">            <span class="attr">loader</span>: <span class="string">'babel-loader'</span>,</div><div class="line">            <span class="attr">query</span>: &#123;</div><div class="line">                <span class="attr">presets</span>: [<span class="string">'es2015'</span>]</div><div class="line">            &#125;</div><div class="line">        &#125;]</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<hr>
+<h2 id="10、配置-jQuery-解析器"><a href="#10、配置-jQuery-解析器" class="headerlink" title="10、配置 jQuery 解析器"></a>10、配置 <code>jQuery</code> 解析器</h2><h3 id="10-1-安装-jquery"><a href="#10-1-安装-jquery" class="headerlink" title="10.1 安装 jquery"></a>10.1 安装 <code>jquery</code></h3><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm <span class="keyword">install </span><span class="keyword">jquery </span>--save-dev</div></pre></td></tr></table></figure>
+<h3 id="10-2-修改-index-js-调用-jquery-函数"><a href="#10-2-修改-index-js-调用-jquery-函数" class="headerlink" title="10.2 修改 index.js 调用 jquery 函数"></a>10.2 修改 <code>index.js</code> 调用 <code>jquery</code> 函数</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">require</span>(<span class="string">'jquery'</span>)</div><div class="line"></div><div class="line">$(init)</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">init</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> lib = <span class="built_in">require</span>(<span class="string">'./common.js'</span>)</div><div class="line">    lib.printmsg(<span class="string">'good'</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="10-3-修改配置文件-webpack-config-js"><a href="#10-3-修改配置文件-webpack-config-js" class="headerlink" title="10.3 修改配置文件 webpack.config.js"></a>10.3 修改配置文件 <code>webpack.config.js</code></h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"><span class="keyword">var</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">    <span class="attr">devtool</span>: <span class="string">'source-map'</span>,</div><div class="line">    <span class="attr">entry</span>: <span class="string">'./src/js/index.js'</span>,</div><div class="line">    <span class="attr">output</span>: &#123;</div><div class="line">        <span class="attr">filename</span>: <span class="string">'bundle.js'</span>,</div><div class="line">        <span class="attr">path</span>: path.resolve(__dirname, <span class="string">'dist'</span>)</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">module</span>: &#123;   </div><div class="line">        <span class="attr">rules</span>: [&#123;</div><div class="line">            <span class="attr">test</span>: <span class="regexp">/\.js$/</span>,  <span class="comment">//babel代码解析</span></div><div class="line">            exclude: <span class="regexp">/node_modules/</span>,</div><div class="line">            <span class="attr">loader</span>: <span class="string">'babel-loader'</span>,</div><div class="line">            <span class="attr">query</span>: &#123;</div><div class="line">                <span class="attr">presets</span>: [<span class="string">'es2015'</span>]</div><div class="line">            &#125;</div><div class="line">        &#125;]</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">plugins</span>: [</div><div class="line">        <span class="keyword">new</span> webpack.ProvidePlugin(&#123;   <span class="comment">//jquery解析器</span></div><div class="line">            $: <span class="string">"jquery"</span>,</div><div class="line">            <span class="attr">jQuery</span>: <span class="string">"jquery"</span>,</div><div class="line">            <span class="string">"window.jQuery"</span>: <span class="string">"jquery"</span></div><div class="line">        &#125;)</div><div class="line">    ]</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<hr>
+<h2 id="11、配置-javascript-代码压缩"><a href="#11、配置-javascript-代码压缩" class="headerlink" title="11、配置 javascript 代码压缩"></a>11、配置 <code>javascript</code> 代码压缩</h2><h3 id="11-1-修改配置文件-webpack-config-js-在-plugin-中添加-webpack-optimize-UglifyJsPlugin-模块"><a href="#11-1-修改配置文件-webpack-config-js-在-plugin-中添加-webpack-optimize-UglifyJsPlugin-模块" class="headerlink" title="11.1 修改配置文件 webpack.config.js, 在 plugin 中添加 webpack.optimize.UglifyJsPlugin 模块"></a>11.1 修改配置文件 <code>webpack.config.js</code>, 在 <code>plugin</code> 中添加 <code>webpack.optimize.UglifyJsPlugin</code> 模块</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"><span class="keyword">var</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</div><div class="line"><span class="keyword">var</span> uglifyJsPlugin = webpack.optimize.UglifyJsPlugin;</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">    <span class="attr">devtool</span>: <span class="string">'source-map'</span>,</div><div class="line">    <span class="attr">entry</span>: <span class="string">'./src/js/index.js'</span>,</div><div class="line">    <span class="attr">output</span>: &#123;</div><div class="line">        <span class="attr">filename</span>: <span class="string">'bundle.js'</span>,</div><div class="line">        <span class="attr">path</span>: path.resolve(__dirname, <span class="string">'dist'</span>)</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">module</span>: &#123; <span class="comment">//在配置文件里添加JSON loader</span></div><div class="line">        rules: [&#123;</div><div class="line">            <span class="attr">test</span>: <span class="regexp">/\.js$/</span>,   <span class="comment">//babel代码解析</span></div><div class="line">            exclude: <span class="regexp">/node_modules/</span>,</div><div class="line">            <span class="attr">loader</span>: <span class="string">'babel-loader'</span>,</div><div class="line">            <span class="attr">query</span>: &#123;</div><div class="line">                <span class="attr">presets</span>: [<span class="string">'es2015'</span>]</div><div class="line">            &#125;</div><div class="line">        &#125;]</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">plugins</span>: [</div><div class="line">         <span class="keyword">new</span> uglifyJsPlugin(&#123; <span class="comment">//js代码压缩</span></div><div class="line">            compress: &#123;</div><div class="line">                <span class="attr">warnings</span>: <span class="literal">false</span></div><div class="line">            &#125;</div><div class="line">        &#125;)</div><div class="line">    ]</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<hr>
+<h2 id="12、配置-eslint-语法解析"><a href="#12、配置-eslint-语法解析" class="headerlink" title="12、配置 eslint 语法解析"></a>12、配置 <code>eslint</code> 语法解析</h2><h3 id="12-1-安装-esline-库"><a href="#12-1-安装-esline-库" class="headerlink" title="12.1 安装 esline 库"></a>12.1 安装 <code>esline</code> 库</h3><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm <span class="keyword">install </span>eslint eslint-loader eslint-friendly-formatter eslint-plugin-html <span class="keyword">babel-eslint </span>eslint-<span class="built_in">config</span>-standard eslint-plugin-import eslint-plugin-node eslint-plugin-promise eslint-plugin-standard --save-dev</div></pre></td></tr></table></figure>
+<h3 id="12-2-在项目根目录下添加-eslint-配置文件-eslintrc-js"><a href="#12-2-在项目根目录下添加-eslint-配置文件-eslintrc-js" class="headerlink" title="12.2 在项目根目录下添加 eslint 配置文件 .eslintrc.js"></a>12.2 在项目根目录下添加 <code>eslint</code> 配置文件 <code>.eslintrc.js</code></h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// http://eslint.org/docs/user-guide/configuring</span></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  <span class="attr">root</span>: <span class="literal">true</span>,</div><div class="line">  <span class="attr">parser</span>: <span class="string">'babel-eslint'</span>,</div><div class="line">  <span class="attr">parserOptions</span>: &#123;</div><div class="line">    <span class="attr">sourceType</span>: <span class="string">'module'</span></div><div class="line">  &#125;,</div><div class="line">  <span class="attr">env</span>: &#123;</div><div class="line">    <span class="attr">browser</span>: <span class="literal">true</span>,</div><div class="line">  &#125;,</div><div class="line">  <span class="comment">// https://github.com/feross/standard/blob/master/RULES.md#javascript-standard-style</span></div><div class="line">  extends: <span class="string">'standard'</span>,</div><div class="line">  <span class="comment">// required to lint *.vue files</span></div><div class="line">  plugins: [</div><div class="line">    <span class="string">'html'</span></div><div class="line">  ],</div><div class="line">  <span class="comment">// add your custom rules here</span></div><div class="line">  <span class="string">'rules'</span>: &#123;</div><div class="line">    <span class="comment">// allow paren-less arrow functions</span></div><div class="line">    <span class="string">'arrow-parens'</span>: <span class="number">0</span>,</div><div class="line">    <span class="string">"indent"</span>: [<span class="number">2</span>, <span class="number">4</span>],<span class="comment">//缩进风格</span></div><div class="line">    <span class="string">'no-undef'</span>: <span class="number">0</span>,</div><div class="line">    <span class="comment">// allow async-await</span></div><div class="line">    <span class="string">'generator-star-spacing'</span>: <span class="number">0</span>,</div><div class="line">    <span class="comment">// allow debugger during development</span></div><div class="line">    <span class="string">'no-debugger'</span>: process.env.NODE_ENV === <span class="string">'production'</span> ? <span class="number">2</span> : <span class="number">0</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h2 id="13、配置图片压缩器"><a href="#13、配置图片压缩器" class="headerlink" title="13、配置图片压缩器"></a>13、配置图片压缩器</h2><h3 id="13-1-安装-url-loader-库"><a href="#13-1-安装-url-loader-库" class="headerlink" title="13.1 安装 url-loader 库"></a>13.1 安装 <code>url-loader</code> 库</h3><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm <span class="keyword">install </span>url-loader --save-dev</div></pre></td></tr></table></figure>
+<h3 id="13-2-修改-index-less-文件"><a href="#13-2-修改-index-less-文件" class="headerlink" title="13.2 修改 index.less 文件"></a>13.2 修改 <code>index.less</code> 文件</h3><figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">@charset</span> <span class="string">"utf-8"</span>;</div><div class="line"><span class="variable">@gray-base:</span>  <span class="number">#000</span>;</div><div class="line"><span class="variable">@gray-light:</span>  lighten(<span class="variable">@gray-base</span>, <span class="number">46.7%</span>); </div><div class="line"></div><div class="line"><span class="selector-class">.g-index</span> &#123;</div><div class="line">    <span class="attribute">height</span>: <span class="number">100vh</span>;</div><div class="line">    <span class="attribute">background</span>: <span class="variable">@gray-light</span>;</div><div class="line">    <span class="attribute">background</span>: url(<span class="string">'../img/small.png'</span>) no-repeat;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>###　13.3 修改配置文件 <code>webpack.config.js</code><br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"><span class="keyword">var</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">    <span class="attr">devtool</span>: <span class="string">'source-map'</span>,</div><div class="line">    <span class="attr">entry</span>: <span class="string">'./src/js/index.js'</span>,</div><div class="line">    <span class="attr">output</span>: &#123;</div><div class="line">        <span class="attr">filename</span>: <span class="string">'bundle.js'</span>,</div><div class="line">        <span class="attr">path</span>: path.resolve(__dirname, <span class="string">'dist'</span>)</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">module</span>: &#123;</div><div class="line">        <span class="attr">rules</span>: [ &#123;</div><div class="line">            <span class="attr">test</span>: <span class="regexp">/\.less$/</span>, <span class="comment">// less解析器</span></div><div class="line">            loader: <span class="string">'style-loader!css-loader!less-loader'</span></div><div class="line">        &#125;, &#123;</div><div class="line">            <span class="attr">test</span>: <span class="regexp">/\.(png|jpg)$/</span>, <span class="comment">// img压缩器</span></div><div class="line">            loader: <span class="string">'url-loader?limit=8192'</span></div><div class="line">        &#125;]</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>项目结构如下：<br><img src="/img/webpack/xmjg4.png" alt="项目结构" title="项目结构"></p>
+<hr>
+<h2 id="14、配置公共库抽取"><a href="#14、配置公共库抽取" class="headerlink" title="14、配置公共库抽取"></a>14、配置公共库抽取</h2><h3 id="14-1-安装-chunk-manifest-webpack-plugin-webpack-chunk-hash-库"><a href="#14-1-安装-chunk-manifest-webpack-plugin-webpack-chunk-hash-库" class="headerlink" title="14.1 安装 chunk-manifest-webpack-plugin  webpack-chunk-hash 库"></a>14.1 安装 <code>chunk-manifest-webpack-plugin</code>  <code>webpack-chunk-hash</code> 库</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm <span class="keyword">install</span> <span class="keyword">chunk</span>-manifest-webpack-<span class="keyword">plugin</span> webpack-<span class="keyword">chunk</span>-<span class="keyword">hash</span>  <span class="comment">--save-dev</span></div></pre></td></tr></table></figure>
+<h3 id="14-2-修改配置文件-webpack-config-js"><a href="#14-2-修改配置文件-webpack-config-js" class="headerlink" title="14.2 修改配置文件 webpack.config.js"></a>14.2 修改配置文件 <code>webpack.config.js</code></h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"><span class="keyword">var</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</div><div class="line"><span class="keyword">var</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>)</div><div class="line"><span class="keyword">var</span> WebpackChunkHash = <span class="built_in">require</span>(<span class="string">"webpack-chunk-hash"</span>);</div><div class="line"><span class="keyword">var</span> ChunkManifestPlugin = <span class="built_in">require</span>(<span class="string">"chunk-manifest-webpack-plugin"</span>);</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">    <span class="attr">devtool</span>: <span class="string">'source-map'</span>,</div><div class="line">    <span class="attr">entry</span>: &#123; </div><div class="line">        <span class="attr">main</span>: <span class="string">'./src/js/index.js'</span>,</div><div class="line">        <span class="attr">vendor</span>: [<span class="string">'jquery'</span>]</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">output</span>: &#123;</div><div class="line">        <span class="attr">filename</span>: <span class="string">'[name].[chunkhash].js'</span>,</div><div class="line">        <span class="attr">path</span>: path.resolve(__dirname, <span class="string">'dist'</span>)</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">module</span>: &#123;</div><div class="line">        <span class="attr">rules</span>: [ &#123;</div><div class="line">            <span class="attr">test</span>: <span class="regexp">/\.less$/</span>, <span class="comment">// less解析器</span></div><div class="line">            loader: <span class="string">'style-loader!css-loader!less-loader'</span></div><div class="line">        &#125;, &#123;</div><div class="line">            <span class="attr">test</span>: <span class="regexp">/\.(png|jpg)$/</span>, <span class="comment">// img压缩器</span></div><div class="line">            loader: <span class="string">'url-loader?limit=8192'</span></div><div class="line">        &#125;]</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">plugins</span>: [</div><div class="line">        <span class="keyword">new</span> HtmlWebpackPlugin(&#123; <span class="comment">// html代码热加载</span></div><div class="line">            template: <span class="string">'./index.html'</span></div><div class="line">        &#125;),</div><div class="line">        <span class="keyword">new</span> webpack.ProvidePlugin(&#123; <span class="comment">//jquery解析器</span></div><div class="line">            $: <span class="string">"jquery"</span>,</div><div class="line">            <span class="attr">jQuery</span>: <span class="string">"jquery"</span>,</div><div class="line">            <span class="string">"window.jQuery"</span>: <span class="string">"jquery"</span></div><div class="line">        &#125;),</div><div class="line">        <span class="keyword">new</span> webpack.optimize.CommonsChunkPlugin(&#123;  <span class="comment">//公共库抽取</span></div><div class="line">            name: [<span class="string">"vendor"</span>, <span class="string">"manifest"</span>], <span class="comment">// vendor libs + extracted manifest</span></div><div class="line">            minChunks: <span class="literal">Infinity</span>,</div><div class="line">        &#125;),</div><div class="line">        <span class="keyword">new</span> webpack.HashedModuleIdsPlugin(),</div><div class="line">        <span class="keyword">new</span> WebpackChunkHash(),</div><div class="line">        <span class="keyword">new</span> ChunkManifestPlugin(&#123;</div><div class="line">          <span class="attr">filename</span>: <span class="string">"chunk-manifest.json"</span>,</div><div class="line">          <span class="attr">manifestVariable</span>: <span class="string">"webpackManifest"</span></div><div class="line">        &#125;)</div><div class="line">    ]</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<hr>
+<h2 id="15、配置模块分析器"><a href="#15、配置模块分析器" class="headerlink" title="15、配置模块分析器"></a>15、配置模块分析器</h2><p>在项目复杂的情况下，为了分析多个模块的相互依赖以及打包的关系，通常引入模块打包分析工具，可以清晰的给出每个模块的依赖关系。</p>
+<h3 id="15-1-安装-webpack-bundle-analyzer-库"><a href="#15-1-安装-webpack-bundle-analyzer-库" class="headerlink" title="15.1 安装 webpack-bundle-analyzer 库"></a>15.1 安装 <code>webpack-bundle-analyzer</code> 库</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm <span class="keyword">install</span> webpack-bundle-analyzer  <span class="comment">--save-dev</span></div></pre></td></tr></table></figure>
+<h3 id="15-2-修改配置文件-webpack-config-js"><a href="#15-2-修改配置文件-webpack-config-js" class="headerlink" title="15.2 修改配置文件 webpack.config.js"></a>15.2 修改配置文件 <code>webpack.config.js</code></h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"><span class="keyword">var</span> &#123; BundleAnalyzerPlugin &#125;  = <span class="built_in">require</span>(<span class="string">'webpack-bundle-analyzer'</span>)</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">    <span class="attr">devtool</span>: <span class="string">'source-map'</span>,</div><div class="line">    <span class="attr">entry</span>: &#123; </div><div class="line">        <span class="attr">main</span>: <span class="string">'./src/js/index.js'</span>,</div><div class="line">        <span class="attr">vendor</span>: [<span class="string">'jquery'</span>]</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">output</span>: &#123;</div><div class="line">        <span class="attr">filename</span>: <span class="string">'[name].[chunkhash].js'</span>,</div><div class="line">        <span class="attr">path</span>: path.resolve(__dirname, <span class="string">'dist'</span>)</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">plugins</span>: [</div><div class="line">        <span class="keyword">new</span> BundleAnalyzerPlugin()</div><div class="line">    ]</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<hr>
+<blockquote>
+<p>原文转载自 <a href="http://www.jianshu.com/p/2d9ed1fe3e8c" target="_blank" rel="external">慢清尘</a> ,根据个人学习与整理略有删减。</p>
+</blockquote>
+
+                <hr>
+                
+                <!-- 多说 Share start -->
+                <div class="ds-share"
+                     style="text-align: right"
+                     data-thread-key="2017/06/04/webpack 配置详解/"
+                     data-title="webpack 配置详解"
+                     data-url="http://blog.isnomo.com/2017/06/04/webpack 配置详解/"
+                     data-images="http://blog.isnomo.com/2017/06/04/webpack 配置详解//img/blog_header1.jpg"
+                     data-content="
+WebPack可以看做是模块打包机：把你的项目当做一个整体，通过一个给定的主文件（如：ind... | Nomo&#39;s blog ">
+                    <div class="ds-share-inline">
+                        <ul class="ds-share-icons-16">
+                            <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
+                            <li><a class="ds-weibo flat" href="javascript:void(0);" data-service="weibo">微博</a></li>
+                            <li><a class="ds-wechat flat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+                            <li><a class="ds-qq flat" href="javascript:void(0);" data-service="qq">QQ</a></li>
+                            <li><a class="ds-qzone flat" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+                            <li><a class="ds-douban flat" href="javascript:void(0);" data-service="douban">豆瓣</a></li>
+                        </ul>
+                        <div class="ds-share-icons-more">
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <!-- 多说 Share end-->
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/2017/05/22/lazyImage原生JS图片懒加载/" data-toggle="tooltip" data-placement="top"
+                           title="lazyImage原生JS图片懒加载">下一篇 &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                         data-thread-key="2017/06/04/webpack 配置详解/"
+                         data-title="webpack 配置详解"
+                         data-url="http://blog.isnomo.com/2017/06/04/webpack 配置详解/">
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、配置webpack"><span class="toc-text">1、配置webpack</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-新建一个项目文件夹，并且安装webpack"><span class="toc-text">1.1 新建一个项目文件夹，并且安装webpack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-新建html以及js文件如下"><span class="toc-text">1.2 新建html以及js文件如下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-编译webpack"><span class="toc-text">1.3 编译webpack</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、编写配置文件"><span class="toc-text">2、编写配置文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-在根目录下面新建-webpack-config-js"><span class="toc-text">2.1 在根目录下面新建 webpack.config.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-修改-package-json，添加条目如下"><span class="toc-text">2.2 修改 package.json，添加条目如下:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-使用命令行编译项目"><span class="toc-text">2.3 使用命令行编译项目</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、调试webpack"><span class="toc-text">3、调试webpack</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4、建立本地开发服务器"><span class="toc-text">4、建立本地开发服务器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-安装-webpack-dev-server"><span class="toc-text">4.1 安装 webpack-dev-server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-修改配置文件-webpack-config-js"><span class="toc-text">4.2 修改配置文件 webpack.config.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-修改-package-json-，添加条目如下"><span class="toc-text">4.3 修改 package.json ，添加条目如下:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-输入-npm-run-dev-启动-webpack-dev-server"><span class="toc-text">4.4 输入 npm run dev 启动 webpack-dev-server</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5、配置HTML代码热加载"><span class="toc-text">5、配置HTML代码热加载</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-安装-html-webpack-plugin"><span class="toc-text">5.1 安装 html-webpack-plugin</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-修改配置文件-webpack-config-js-把-index-html-加入监控"><span class="toc-text">5.2 修改配置文件 webpack.config.js , 把  index.html 加入监控</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6、配置自动打开浏览器"><span class="toc-text">6、配置自动打开浏览器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-安装-open-browser-webpack-plugin"><span class="toc-text">6.1 安装 open-browser-webpack-plugin</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-修改配置文件-webpack-config-js"><span class="toc-text">6.2 修改配置文件 webpack.config.js</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7、配置-json-加载器"><span class="toc-text">7、配置 json 加载器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-在项目根目录下面创建-config-json-文件，内容如下"><span class="toc-text">7.1 在项目根目录下面创建 config.json 文件，内容如下:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-修改-index-js"><span class="toc-text">7.2 修改 index.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3-修改配置文件-webpack-config-js"><span class="toc-text">7.3 修改配置文件 webpack.config.js</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8、配置-LESS-编译"><span class="toc-text">8、配置 LESS 编译</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#8-1-安装-less-style-loader-css-loader-less-loader"><span class="toc-text">8.1 安装 less style-loader css-loader less-loader</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-2-在项目的css目录下面创建-index-less-文件，内容如下"><span class="toc-text">8.2 在项目的css目录下面创建 index.less 文件，内容如下:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-3-修改-index-js"><span class="toc-text">8.3 修改 index.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-4-修改配置文件-webpack-config-js"><span class="toc-text">8.4 修改配置文件 webpack.config.js</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9、配置-Babel-编译"><span class="toc-text">9、配置 Babel 编译</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#9-1-安装-babel-core-babel-loader-babel-preset-es2015"><span class="toc-text">9.1 安装 babel-core babel-loader babel-preset-es2015</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-2-修改-common-js-为-ES6-格式"><span class="toc-text">9.2 修改 common.js 为 ES6 格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-3-修改配置文件-webpack-config-js"><span class="toc-text">9.3 修改配置文件 webpack.config.js</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10、配置-jQuery-解析器"><span class="toc-text">10、配置 jQuery 解析器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#10-1-安装-jquery"><span class="toc-text">10.1 安装 jquery</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-2-修改-index-js-调用-jquery-函数"><span class="toc-text">10.2 修改 index.js 调用 jquery 函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-3-修改配置文件-webpack-config-js"><span class="toc-text">10.3 修改配置文件 webpack.config.js</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11、配置-javascript-代码压缩"><span class="toc-text">11、配置 javascript 代码压缩</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#11-1-修改配置文件-webpack-config-js-在-plugin-中添加-webpack-optimize-UglifyJsPlugin-模块"><span class="toc-text">11.1 修改配置文件 webpack.config.js, 在 plugin 中添加 webpack.optimize.UglifyJsPlugin 模块</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12、配置-eslint-语法解析"><span class="toc-text">12、配置 eslint 语法解析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#12-1-安装-esline-库"><span class="toc-text">12.1 安装 esline 库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-2-在项目根目录下添加-eslint-配置文件-eslintrc-js"><span class="toc-text">12.2 在项目根目录下添加 eslint 配置文件 .eslintrc.js</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13、配置图片压缩器"><span class="toc-text">13、配置图片压缩器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#13-1-安装-url-loader-库"><span class="toc-text">13.1 安装 url-loader 库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-2-修改-index-less-文件"><span class="toc-text">13.2 修改 index.less 文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14、配置公共库抽取"><span class="toc-text">14、配置公共库抽取</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#14-1-安装-chunk-manifest-webpack-plugin-webpack-chunk-hash-库"><span class="toc-text">14.1 安装 chunk-manifest-webpack-plugin  webpack-chunk-hash 库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14-2-修改配置文件-webpack-config-js"><span class="toc-text">14.2 修改配置文件 webpack.config.js</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#15、配置模块分析器"><span class="toc-text">15、配置模块分析器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#15-1-安装-webpack-bundle-analyzer-库"><span class="toc-text">15.1 安装 webpack-bundle-analyzer 库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#15-2-修改配置文件-webpack-config-js"><span class="toc-text">15.2 修改配置文件 webpack.config.js</span></a></li></ol></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/Tags/">标签</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#webpack"
+                           title="webpack">webpack</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">友情链接</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="http://hexo.io">HEXO</a></li>
+                        
+                        <li><a href="http://isnomo.com">isNomo</a></li>
+                        
+                        <li><a href="http://moxfive.xyz/">MOxFIVE</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'nomo';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user};
+    (function () {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';
+        ds.async = true;
+//        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.src = '/js/embed_ua.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a target="_blank" href="http://weibo.com/1935873681">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/-nomo">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+
+                    
+
+                    
+                    <li>
+                        <a target="_blank"  href="https://github.com/isnomo">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                    
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/炜皓-项-296585126">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Nomo 2017
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">本站访问量: <span id="busuanzi_value_site_pv"></span> 次</span>丨
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">本文阅读量: <span id="busuanzi_value_page_pv"></span> 次</span>
+                    <br>
+                    <a href="https://hexo.io/">Hexo</a> Theme by <a href="https://blog.isnomo.com/">_Nomo</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<script src="/js/hover3d.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".hover3D").hover3d({
+            selector: ".hover3D_card",
+            perspective: 3000,
+            sensitivity: 35
+        });
+    });
+</script>
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://blog.isnomo.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    var _baId = '68e322350c5e69b5a924978892f21122';
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?" + _baId;
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+<!--&lt;!&ndash; swiftype 站内搜索引擎 &ndash;&gt;-->
+<!--<script type="text/javascript">-->
+  <!--(function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){-->
+  <!--(w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);-->
+  <!--e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);-->
+  <!--})(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');-->
+
+  <!--_st('install','null','2.0.0');-->
+<!--</script>-->
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="/img/new_aman.jpg">
+</body>
+
+</html>
