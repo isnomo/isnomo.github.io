@@ -101,7 +101,7 @@
                         
 							
                         <li>
-                            <a href="/tags/">标签</a>
+                            <a href="/works/">作品集</a>
                         </li>
 							
 						
@@ -109,7 +109,7 @@
                         
 							
                         <li>
-                            <a href="/works/">作品集</a>
+                            <a href="/tags/">标签</a>
                         </li>
 							
 						
@@ -215,7 +215,7 @@
 </blockquote>
 <a id="more"></a>
 <p>根据不蒜子的介绍，使用起来非常简单。只需要两行代码（一行脚本、一行HTML显示）搞定计数。</p>
-<h2 id="一、引入脚本文件"><a href="#一、引入脚本文件" class="headerlink" title="一、引入脚本文件"></a>一、引入脚本文件</h2><p>在你引入JS的地方添加下列脚本即可，以我的博客为例：themes/主题/layout/_partial/footer.ejs<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;script <span class="keyword">async</span> src=<span class="string">"https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"</span>&gt;</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure></p>
+<h2 id="一、引入脚本文件"><a href="#一、引入脚本文件" class="headerlink" title="一、引入脚本文件"></a>一、引入脚本文件</h2><p>在你引入JS的地方添加下列脚本即可，以我的博客为例：themes/主题/layout/_partial/footer.ejs<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;script <span class="keyword">async</span> src=<span class="string">"https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"</span>&gt;</div><div class="line"><span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></div></pre></td></tr></table></figure></p>
 <h2 id="二、插入html显示"><a href="#二、插入html显示" class="headerlink" title="二、插入html显示"></a>二、插入html显示</h2><h3 id="1、显示站点总访问量和访客数"><a href="#1、显示站点总访问量和访客数" class="headerlink" title="1、显示站点总访问量和访客数"></a>1、显示站点总访问量和访客数</h3><p>在你要显示的地方插入下列html代码即可。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"busuanzi_container_site_pv"</span> <span class="attr">style</span>=<span class="string">"font-size: 12px;"</span>&gt;</span></div><div class="line">    本站访问量:</div><div class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"busuanzi_value_site_pv"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span> 次</div><div class="line"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line"> 丨</div><div class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"busuanzi_container_site_pv"</span> <span class="attr">style</span>=<span class="string">"font-size: 12px;"</span>&gt;</span></div><div class="line">    本站访客:</div><div class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"busuanzi_value_site_uv"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span> 人</div><div class="line"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></div></pre></td></tr></table></figure></p>
 <p>效果展示:<br><img src="/img/busuanzi/01.jpg" class="[class names]" title="[width] [height] 效果展示"></p>
 <h3 id="2、显示单页面访问量"><a href="#2、显示单页面访问量" class="headerlink" title="2、显示单页面访问量"></a>2、显示单页面访问量</h3><p>要显示每个页面单页面的访问量，插入下列代码即可。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"busuanzi_container_page_pv"</span>&gt;</span></div><div class="line">  本文总阅读量：<span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"busuanzi_value_page_pv"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span> 次</div><div class="line"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></div></pre></td></tr></table></figure></p>

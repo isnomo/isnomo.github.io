@@ -101,7 +101,7 @@
                         
 							
                         <li>
-                            <a href="/tags/">标签</a>
+                            <a href="/works/">作品集</a>
                         </li>
 							
 						
@@ -109,7 +109,7 @@
                         
 							
                         <li>
-                            <a href="/works/">作品集</a>
+                            <a href="/tags/">标签</a>
                         </li>
 							
 						
@@ -247,7 +247,9 @@
 <hr>
 <h3 id="Object-create"><a href="#Object-create" class="headerlink" title="Object.create"></a>Object.create</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> person1 = &#123;</div><div class="line">    <span class="attr">name</span>: <span class="string">'jessica'</span>,</div><div class="line">    <span class="attr">age</span>: <span class="number">27</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> person2 = <span class="built_in">Object</span>.create(person1);</div></pre></td></tr></table></figure>
 <p>这种情况下，<code>person2</code> 的 <code>__proto__</code> 指向 <code>person1</code> 。在没有 <code>Object.create</code> 函数的时候，人们大多是这样做的：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Object</span>.create = <span class="function"><span class="keyword">function</span>(<span class="params">p</span>) </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>)</span>&#123;&#125;;</div><div class="line">    f.prototype = p;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> f();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h2 id="一看大家就会明白了。"><a href="#一看大家就会明白了。" class="headerlink" title="一看大家就会明白了。"></a>一看大家就会明白了。</h2><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>其实仔细思考下上面提到的三种创建对象的方法，追究其本质，不难发现，最根本的还是利用构造函数再通过new来创建对象。所谓的对象字面量也只不过是语法糖而已，本质上是 <code>var o = new Object(); o.xx = xx;o.yy=yy;</code> 。 所以，函数真不愧是js中的一等公民呀~</p>
+<p>一看大家就会明白了。</p>
+<hr>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>其实仔细思考下上面提到的三种创建对象的方法，追究其本质，不难发现，最根本的还是利用构造函数再通过new来创建对象。所谓的对象字面量也只不过是语法糖而已，本质上是 <code>var o = new Object(); o.xx = xx;o.yy=yy;</code> 。 所以，函数真不愧是js中的一等公民呀~</p>
 <hr>
 <h2 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h2><p>既然已经提到了原型，就不得不提一下原型链了，毕竟这是实现继承最关键所在，也是js对象精妙所在。</p>
 <p>还记得上文提到的一个总结吗？不记得？没关系，我贴出来让大家温故而知新~</p>
@@ -320,7 +322,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#proto-和-prototype-概念区分"><span class="toc-text">__proto__ 和 prototype 概念区分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#当我们-new-Person-的时候到底发生了什么？"><span class="toc-text">当我们 new Person() 的时候到底发生了什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建对象的不同方法解析"><span class="toc-text">创建对象的不同方法解析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#对象字面量"><span class="toc-text">对象字面量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#构造函数"><span class="toc-text">构造函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Object-create"><span class="toc-text">Object.create</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一看大家就会明白了。"><span class="toc-text">一看大家就会明白了。</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原型链"><span class="toc-text">原型链</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结-1"><span class="toc-text">总结</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#proto-和-prototype-概念区分"><span class="toc-text">__proto__ 和 prototype 概念区分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#当我们-new-Person-的时候到底发生了什么？"><span class="toc-text">当我们 new Person() 的时候到底发生了什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建对象的不同方法解析"><span class="toc-text">创建对象的不同方法解析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#对象字面量"><span class="toc-text">对象字面量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#构造函数"><span class="toc-text">构造函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Object-create"><span class="toc-text">Object.create</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原型链"><span class="toc-text">原型链</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结-1"><span class="toc-text">总结</span></a></li></ol>
                 </div>
             </div>
         </div>
