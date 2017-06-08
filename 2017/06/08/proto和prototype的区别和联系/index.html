@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Nomo Hsiang的博客，关注前段技术。">
+    <meta name="keyword" content="Nomo,isnomo,NOMO,nomo博客,nomo blog,isnomo blog">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="icon" href="/img/icon.png">
+    <link rel="alternate" type="application/atom+xml" title="Nomo" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        __proto__和prototype的区别和联系｜Nomo&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://blog.isnomo.com/2017/06/08/proto和prototype的区别和联系/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('/img/mobile.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    Nomo
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="blog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">首页</a>
+                    </li>
+					
+					
+                    
+                        
+							
+								
+							
+						
+                    
+                        
+							
+								
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/archives/">归档</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">标签</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/works/">作品集</a>
+                        </li>
+							
+						
+                    
+					
+					
+						<li>
+							<a href="/about">关于我</a>
+						</li>
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#blog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img" src="/img/blog_header1.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('/img/blog_header1.jpg');
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>__proto__和prototype的区别和联系</h1>
+                    
+                    <h2 class="subheading">javascript对象详解：__proto__和prototype的区别和联系</h2>
+                    
+                    <span class="meta">
+                         作者 _Nomo
+                        <span>
+                          日期 2017-06-08
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#JS原型"
+                           title="JS原型">JS原型</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            __proto__和prototype的区别和联系
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <blockquote>
+<p>本篇文章用来记录下最近研究对象的一些心得，做一个记录与总结，以加深自己的印象，同时，希望也能给正在学习中的你一点启发。本文适合有一定JavaScript基础的童鞋阅读。 <a href="https://mengera88.github.io/2017/06/06/javascript%E5%AF%B9%E8%B1%A1%E8%AF%A6%E8%A7%A3%EF%BC%9A%E6%90%9E%E6%B8%85%E6%A5%9A%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE/" target="_blank" rel="external">原文点这里</a> ,根据个人学习与整理略有删减。</p>
+</blockquote>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在JavaScript中，万物皆对象。咱们写一个JavaScript对象，大多数时候是用构造函数创建一个对象或者用对象字面量创建一个对象。比如：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//通过构造函数来创建对象</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="comment">//...</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> person1 = <span class="keyword">new</span> Person();</div><div class="line"><span class="comment">//通过对象字面量创建对象</span></div><div class="line"><span class="keyword">var</span> person2 = &#123;</div><div class="line">    <span class="attr">name</span>: <span class="string">'jessica'</span>,</div><div class="line">    <span class="attr">age</span>: <span class="number">27</span>,</div><div class="line">    <span class="attr">job</span>: <span class="string">'teacher'</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>当然还有其他方式创建对象，这里就不列举出来了。那么问题来了，通过不同的方式创建的对象有什么区别呢？</p>
+<p>我们知道，每个JS对象一定对应一个原型对象，并从原型对象继承属性和方法。那么对象是怎么和这个原型对象对应的呢？带着问题慢慢看下面的内容吧~</p>
+<hr>
+<h2 id="proto-和-prototype-概念区分"><a href="#proto-和-prototype-概念区分" class="headerlink" title="__proto__ 和 prototype 概念区分"></a><code>__proto__</code> 和 <code>prototype</code> 概念区分</h2><p>其实说<strong>proto</strong>并不准确，确切的说是对象的[[prototype]]属性，只不过在主流的浏览器中，都用<strong>proto</strong>来代表[[prototype]]属性，因为[[prototype]]只是一个标准，而针对这个标准，不同的浏览器有不同的实现方式。在ES5中用Object.getPrototypeOf函数获得一个对象的[[prototype]]。ES6中，使用Object.setPrototypeOf可以直接修改一个对象的[[prototype]]。为了方便，我下面的文章用<strong>proto</strong>来代表对象的[[prototype]]。</p>
+<p>而prototype属性是只有函数才特有的属性，当你创建一个函数时，js会自动为这个函数加上prototype属性，值是一个空对象。所以，函数在js中是非常特殊的，是所谓的一等公民。</p>
+<p>那么 <code>__proto__</code> 和 <code>prototype</code> 是怎么联系起来的呢？让我们来看下下面的代码：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name, age</span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.name = name;</div><div class="line">    <span class="keyword">this</span>.age = age;</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> person1 = <span class="keyword">new</span> Person(<span class="string">'jessica'</span>, <span class="number">27</span>);</div></pre></td></tr></table></figure></p>
+<hr>
+<h2 id="当我们-new-Person-的时候到底发生了什么？"><a href="#当我们-new-Person-的时候到底发生了什么？" class="headerlink" title="当我们 new Person() 的时候到底发生了什么？"></a>当我们 <code>new Person()</code> 的时候到底发生了什么？</h2><p><code>new</code> 一个构造函数，相当于实例化一个对象，这期间其实进行了这三个步骤：</p>
+<ol>
+<li>创建对象，设为o，即： var o = {};</li>
+<li>上文提到了，每个对象都有<strong>proto</strong>属性，该属性指向一个对象，这里，将o对象的<strong>Proto</strong>指向构造函数Person的原型对象（Person.prototype）;</li>
+<li>将o作为this去调用构造函数Person，从而设置o的属性和方法并初始化。</li>
+</ol>
+<p>当这3步完成，这个o对象就与构造函数Person再无联系，这个时候即使构造函数Person再加任何成员，都不再影响已经实例化的o对象了。</p>
+<p>此时，o对象具有了name和age属性，同时具有了构造函数Person的原型对象的所有成员，当然，此时该原型对象是没有成员的。</p>
+<p>现在大家都明白了吧，简单的总结下就是：</p>
+<blockquote>
+<p>js 在创建对象的时候，都有一个叫做 <code>__proto__</code> 的内置属性，用于指向创建它的函数对象的原型对象 <code>prototype</code> 。</p>
+</blockquote>
+<p>那么一个对象的 <code>__proto__</code> 属性究竟怎么决定呢？</p>
+<p>答案显而易见了：是由构造该对象的方法决定的。</p>
+<hr>
+<h2 id="创建对象的不同方法解析"><a href="#创建对象的不同方法解析" class="headerlink" title="创建对象的不同方法解析"></a>创建对象的不同方法解析</h2><p>下面讲解三种常见的创建对象方法。</p>
+<h3 id="对象字面量"><a href="#对象字面量" class="headerlink" title="对象字面量"></a>对象字面量</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> Person = &#123;</div><div class="line">    <span class="attr">name</span>: <span class="string">'jessica'</span>,</div><div class="line">    <span class="attr">age</span>: <span class="number">27</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这种形式就是对象字面量，通过对象字面量构造出的对象，其 <code>__proto__</code> 指向 <code>Object.prototype</code> 。</p>
+<p>所以，其实 <code>Object</code> 是一个函数也不难理解了。<em>Object、Function都是是js自带的函数对象。</em></p>
+<p>可以跑下面的代码看看：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> <span class="built_in">Object</span>); </div><div class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> <span class="built_in">Function</span>);</div></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h3><p>就如我前面讲的,形如：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>)</span>&#123;&#125;</div><div class="line"><span class="keyword">var</span> person1 = <span class="keyword">new</span> Person();</div></pre></td></tr></table></figure></p>
+<p>这种形式创建对象的方式就是通过构造函数创建对象，这里的构造函数是Person函数。上面也讲过了，通过构造函数创建的对象，其 <code>__proto</code> 指向的是构造函数的 <code>prototype</code> 属性指向的对象。</p>
+<hr>
+<h3 id="Object-create"><a href="#Object-create" class="headerlink" title="Object.create"></a>Object.create</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> person1 = &#123;</div><div class="line">    <span class="attr">name</span>: <span class="string">'jessica'</span>,</div><div class="line">    <span class="attr">age</span>: <span class="number">27</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> person2 = <span class="built_in">Object</span>.create(person1);</div></pre></td></tr></table></figure>
+<p>这种情况下，<code>person2</code> 的 <code>__proto__</code> 指向 <code>person1</code> 。在没有 <code>Object.create</code> 函数的时候，人们大多是这样做的：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Object</span>.create = <span class="function"><span class="keyword">function</span>(<span class="params">p</span>) </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>)</span>&#123;&#125;;</div><div class="line">    f.prototype = p;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> f();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="一看大家就会明白了。"><a href="#一看大家就会明白了。" class="headerlink" title="一看大家就会明白了。"></a>一看大家就会明白了。</h2><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>其实仔细思考下上面提到的三种创建对象的方法，追究其本质，不难发现，最根本的还是利用构造函数再通过new来创建对象。所谓的对象字面量也只不过是语法糖而已，本质上是 <code>var o = new Object(); o.xx = xx;o.yy=yy;</code> 。 所以，函数真不愧是js中的一等公民呀~</p>
+<hr>
+<h2 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h2><p>既然已经提到了原型，就不得不提一下原型链了，毕竟这是实现继承最关键所在，也是js对象精妙所在。</p>
+<p>还记得上文提到的一个总结吗？不记得？没关系，我贴出来让大家温故而知新~</p>
+<blockquote>
+<p>js 在创建对象的时候，都有一个叫做 <code>__proto__</code> 的内置属性，用于指向创建它的函数对象的原型对象 <code>prototype</code> 。</p>
+</blockquote>
+<p>而原型链的基本思想就是利用原型让一个引用类型继承另一个引用类型的属性和方法。</p>
+<p>让我们再简单回顾下构造函数、原型和实例的关系：</p>
+<p>每个构造函数都有一个原型对象，原型对象包含一个指向构造函数的指针(<code>constructor</code> )，而实例则包含一个指向原型对象的内部指针( <code>__proto__</code> )。</p>
+<p>我们拿一个例子来讲解：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name, age</span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.name = name;</div><div class="line">    <span class="keyword">this</span>.age = age;</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> person1 = <span class="keyword">new</span> Person(<span class="string">'jessica'</span>, <span class="number">27</span>);</div></pre></td></tr></table></figure></p>
+<p>一图胜前言，我们用画图的形式来讲解下上面的例子：</p>
+<p><img src="/img/webpack/object_proto.png" alt="object_proto" title="object_proto"></p>
+<p>从上图可以看到，其实原型链的顶端是 <code>Object.prototype.__proto__</code> ,也即为null。</p>
+<hr>
+<h2 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h2><p>函数是js中的一等公民，js在创建对象的时候，都有一个叫做 <code>__proto__</code> 的内置属性，用于指向创建它的函数对象的原型对象 <code>prototype</code> 。只有函数有 <code>prototype</code> , 当你创建一个函数时，js会自动为这个函数加上 <code>prototype</code> 属性，值是一个空对象。</p>
+
+                <hr>
+                
+                <!-- 多说 Share start -->
+                <div class="ds-share"
+                     style="text-align: right"
+                     data-thread-key="2017/06/08/proto和prototype的区别和联系/"
+                     data-title="__proto__和prototype的区别和联系"
+                     data-url="http://blog.isnomo.com/2017/06/08/proto和prototype的区别和联系/"
+                     data-images="http://blog.isnomo.com/2017/06/08/proto和prototype的区别和联系//img/blog_header1.jpg"
+                     data-content="
+本篇文章用来记录下最近研究对象的一些心得，做一个记录与总结，以加深自己的印象，同时，希望也能... | Nomo&#39;s blog ">
+                    <div class="ds-share-inline">
+                        <ul class="ds-share-icons-16">
+                            <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
+                            <li><a class="ds-weibo flat" href="javascript:void(0);" data-service="weibo">微博</a></li>
+                            <li><a class="ds-wechat flat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+                            <li><a class="ds-qq flat" href="javascript:void(0);" data-service="qq">QQ</a></li>
+                            <li><a class="ds-qzone flat" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+                            <li><a class="ds-douban flat" href="javascript:void(0);" data-service="douban">豆瓣</a></li>
+                        </ul>
+                        <div class="ds-share-icons-more">
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <!-- 多说 Share end-->
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/2017/06/04/webpack 配置详解/" data-toggle="tooltip" data-placement="top"
+                           title="webpack 配置详解">下一篇 &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                         data-thread-key="2017/06/08/proto和prototype的区别和联系/"
+                         data-title="__proto__和prototype的区别和联系"
+                         data-url="http://blog.isnomo.com/2017/06/08/proto和prototype的区别和联系/">
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#proto-和-prototype-概念区分"><span class="toc-text">__proto__ 和 prototype 概念区分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#当我们-new-Person-的时候到底发生了什么？"><span class="toc-text">当我们 new Person() 的时候到底发生了什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建对象的不同方法解析"><span class="toc-text">创建对象的不同方法解析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#对象字面量"><span class="toc-text">对象字面量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#构造函数"><span class="toc-text">构造函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Object-create"><span class="toc-text">Object.create</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一看大家就会明白了。"><span class="toc-text">一看大家就会明白了。</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原型链"><span class="toc-text">原型链</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结-1"><span class="toc-text">总结</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/Tags/">标签</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#JS原型"
+                           title="JS原型">JS原型</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">友情链接</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="http://hexo.io">HEXO</a></li>
+                        
+                        <li><a href="http://isnomo.com">isNomo</a></li>
+                        
+                        <li><a href="http://moxfive.xyz/">MOxFIVE</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'nomo';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user};
+    (function () {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';
+        ds.async = true;
+//        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.src = '/js/embed_ua.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a target="_blank" href="http://weibo.com/1935873681">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/-nomo">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+
+                    
+
+                    
+                    <li>
+                        <a target="_blank"  href="https://github.com/isnomo">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                    
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/炜皓-项-296585126">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Nomo 2017
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">本站访问量: <span id="busuanzi_value_site_pv"></span> 次</span>丨
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">本文阅读量: <span id="busuanzi_value_page_pv"></span> 次</span>
+                    <br>
+                    <a href="https://hexo.io/">Hexo</a> Theme by <a href="https://blog.isnomo.com/">_Nomo</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<script src="/js/hover3d.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".hover3D").hover3d({
+            selector: ".hover3D_card",
+            perspective: 3000,
+            sensitivity: 35
+        });
+    });
+</script>
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://blog.isnomo.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    var _baId = '68e322350c5e69b5a924978892f21122';
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?" + _baId;
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+<!--&lt;!&ndash; swiftype 站内搜索引擎 &ndash;&gt;-->
+<!--<script type="text/javascript">-->
+  <!--(function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){-->
+  <!--(w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);-->
+  <!--e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);-->
+  <!--})(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');-->
+
+  <!--_st('install','null','2.0.0');-->
+<!--</script>-->
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="/img/new_aman.jpg">
+</body>
+
+</html>
