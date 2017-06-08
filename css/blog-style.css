@@ -1296,10 +1296,15 @@ img::-moz-selection {
     color: #FC7097;
 }
 #ds-smilies-tooltip ul.ds-smilies-tabs{
-    height: 139px; !important;
+    height: 139px !important;
 }
 .highlight .table>tbody>tr>td{
     padding:0;
+}
+
+
+.bdshare-button-style1-24 {
+    display: inline-flex;
 }
 
 
